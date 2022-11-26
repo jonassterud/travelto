@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: cargo build --all --verbose
+    - name: Run tests
+      env:
+        KIWI_SEARCH: ${{ secrets.KIWI_SEARCH }}
+        KIWI_MULTICITY: ${{ secrets.KIWI_MULTICITY }}
+        KIWI_NOMAD: ${{ secrets.KIWI_NOMAD }}
+      run: cargo test --all --verbose
