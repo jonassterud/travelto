@@ -1,0 +1,17 @@
+[package]
+name = "travelto"
+[package]
+name = "travelto"
+version = "0.0.0"
+authors = ["Jonas Mathisrud Sterud <jonas.sterud@gmail.com>"]
+edition = "2021"
+description = "Tries to find the cheapest way to travel between two destinations"
+repository = "https://github.com/jonassterud/travelto"
+license = "MIT"
+
+[dependencies]
+anyhow = { version = "1.0" }
+dotenv = { version = "0.15" }
+ureq = { version = "2.5", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0" }
