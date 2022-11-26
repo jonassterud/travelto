@@ -70,7 +70,7 @@ struct Keys {
 
 impl Default for Keys {
     fn default() -> Self {
-        Self::from_env().unwrap_or(Self::empty())
+        Self::from_env().unwrap_or_else(|_| Self::empty())
     }
 }
 

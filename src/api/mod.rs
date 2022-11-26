@@ -9,6 +9,6 @@ pub use state::State;
 
 use anyhow::Result;
 
-pub fn get_flights() -> Result<Vec<Flight>> {
+pub fn get_flights(config: &Config) -> Result<Vec<Flight>> {
     todo!()
 }
