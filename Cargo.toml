@@ -1,7 +1,5 @@
 [package]
 name = "travelto"
-[package]
-name = "travelto"
 version = "0.0.0"
 authors = ["Jonas Mathisrud Sterud <jonas.sterud@gmail.com>"]
 edition = "2021"
