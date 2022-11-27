@@ -12,8 +12,10 @@ pub use state::State;
 use anyhow::Result;
 
 pub fn get_flights(config: &Config) -> Result<Vec<Flight>> {
-    let kiwi_results = kiwi_api::search();
+    let mut out = vec![];
+
+    out.append(&mut kiwi_api::search(config)?.into());
     // ...
 
-    todo!()
+    Ok(out)
 }
