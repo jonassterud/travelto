@@ -6,19 +6,19 @@ use std::{
 };
 
 /// Config
-#[derive(Debug, Deserialize, Hash)]
+#[derive(Debug, Clone, Deserialize, Hash)]
 pub struct Config {
     /// Place to travel from.
-    from: String,
+    pub from: String,
     /// Place to travel to.
-    to: String,
+    pub to: String,
     /// Departure date range in "dd/mm/yyyy" format.
-    departure_date: (String, String),
+    pub departure_date: (String, String),
     /// Return date range in "dd/mm/yyyy" format.
-    return_date: Option<(String, String)>,
+    pub return_date: Option<(String, String)>,
     /// API keys.
     #[serde(skip)]
-    keys: Keys,
+    pub keys: Keys,
 }
 
 impl Config {
@@ -45,13 +45,6 @@ impl Config {
         })
     }
 
-    /// Set the API keys from environmental variables.
-    pub fn set_keys_from_env(&mut self) -> Result<()> {
-        self.keys = Keys::from_env()?;
-
-        Ok(())
-    }
-
     /// Get hash.
     pub fn get_hash(&self) -> u64 {
         let mut hasher = DefaultHasher::new();
@@ -61,8 +54,8 @@ impl Config {
 }
 
 /// Keys
-#[derive(Debug, Hash)]
-struct Keys {
+#[derive(Debug, Clone, Hash)]
+pub struct Keys {
     kiwi_search: String,
     kiwi_multicity: String,
     kiwi_nomad: String,
