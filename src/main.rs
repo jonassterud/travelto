@@ -1,14 +1,17 @@
-mod kiwi_api;
-mod api;
+#[cfg(test)]
+mod tests;
+
+pub mod api;
+pub mod kiwi_api;
 
 use anyhow::Result;
-use tide::http::mime;
 use std::{
     fs::{self, File},
     path::PathBuf,
     str::FromStr,
     time::SystemTime,
 };
+use tide::http::mime;
 
 const MAX_MODIFIED_DIFF_SECS: u64 = 60 * 10;
 
