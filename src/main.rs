@@ -25,6 +25,8 @@ async fn main() -> Result<()> {
 
     app.at("/").get(index);
     app.at("/search").get(search);
+    app.at("index_style.css").serve_file("src/www/index_style.css")?;
+    app.at("search_style.css").serve_file("src/www/search_style.css")?;
 
     app.listen("127.0.0.1:8080").await?;
 
