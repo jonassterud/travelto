@@ -3,6 +3,7 @@
         <meta charset='UTF-8' />
         <meta http-equiv='X-UA-Compatible' content='IE=edge' />
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <script src='index_script.js'></script>
         <link rel='stylesheet' href='index_style.css' />
         <title>Travelto</title>
     </head>
@@ -15,18 +16,18 @@
                 <div>
                     <input
                         type='radio'
-                        name='flight_type'
+                        name='flight-type'
                         id='one-way'
-                        value='one-way'
+                        onchange='hide_return_range()'
                         checked
                         hidden
                     />
                     <label for='one-way'>One-way</label>
                     <input
                         type='radio'
-                        name='flight_type'
+                        name='flight-type'
                         id='return'
-                        value='return'
+                        onchange='show_return_range()'
                         hidden
                     />
                     <label for='return'>Return</label>
@@ -90,7 +91,7 @@
                     <label>and</label>
                     <input type='date' name='departure_to' id='departure_to' />
                 </div>
-                <div id='return-range'>
+                <div id='return-range' hidden='true'>
                     <label>Return between</label>
                     <input type='date' name='return_from' id='return_from' />
                     <label>and</label>

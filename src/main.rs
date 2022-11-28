@@ -28,6 +28,8 @@ async fn main() -> Result<()> {
     app.at("/search").get(search);
     app.at("index_style.css")
         .serve_file("src/www/index_style.css")?;
+    app.at("index_script.js")
+        .serve_file("src/www/index_script.js")?;
     app.at("search_style.css")
         .serve_file("src/www/search_style.css")?;
 
