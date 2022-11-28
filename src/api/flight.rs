@@ -11,6 +11,8 @@ pub struct Flight {
     pub departure_date: String,
     /// Arrival date.
     pub return_date: Option<String>,
+    /// Price of flight.
+    pub price: u32,
     /// Link to booking site.
     pub link: String,
 }
@@ -25,6 +27,7 @@ impl From<crate::kiwi_api::SearchResponse> for Vec<Flight> {
                 to: data_val.fly_to.to_owned(),
                 departure_date: data_val.local_departure.to_owned(),
                 return_date: None, // for now..
+                price: data_val.price,
                 link: data_val.deep_link.to_owned(),
             })
             .collect()

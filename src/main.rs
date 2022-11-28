@@ -72,7 +72,6 @@ async fn index(req: tide::Request<api::State>) -> tide::Result {
 async fn search(req: tide::Request<api::State>) -> tide::Result {
     #[derive(Debug, Deserialize)]
     pub struct Intermediary {
-        pub flight_type: String,
         pub adults: u32,
         pub children: u32,
         pub infants: u32,

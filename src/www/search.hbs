@@ -7,7 +7,24 @@
         <title>Travelto</title>
     </head>
     <body>
-        <a href='/'><h1>Travelto</h1></a>
-
+        <header>
+            <a href='/'><h1>Travelto</h1></a>
+        </header>
+        <div>
+            {{#each results}}
+                <div onclick='parent.open("{{link}}")' target='_blank'>
+                    <span>{{from}}</span>
+                    <span>{{to}}</span>
+                    <span>{{departure_date}}</span>
+                    <span>{{return_date}}</span>
+                    <span>{{price}}</span>
+                </div>
+            {{else}}
+                <p>No results found!</p>
+            {{/each}}
+        </div>
+        <footer>
+            <a href='https://github.com/jonassterud/travelto'>Source code</a>
+        </footer>
     </body>
 </html>
