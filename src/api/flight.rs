@@ -15,7 +15,7 @@ pub struct Flight {
     pub link: String,
 }
 
-/// Transform a vector of Kiwi flights into a vector of api::Flight's.
+/// Transform a Kiwi flights response into a vector of api::Flight's.
 impl From<crate::kiwi_api::SearchResponse> for Vec<Flight> {
     fn from(val: crate::kiwi_api::SearchResponse) -> Self {
         val.data
