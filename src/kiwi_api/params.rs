@@ -1,6 +1,28 @@
-/// Params for locations.
-#[derive(Debug)]
-pub struct LocationsParams {}
+/// Params for locations query.
+#[derive(Debug, Clone)]
+pub struct LocationsQueryParams {
+    apikey: String,
+    term: String,
+}
+
+impl LocationsQueryParams {
+    /// Create a new [`LocationsQueryParams`].
+    pub fn new(apikey: &str, term: &str) -> LocationsQueryParams {
+        LocationsQueryParams {
+            apikey: apikey.to_owned(),
+            term: term.to_owned(),
+        }
+    }
+
+    /// Get parameters as a single URL compatible string.
+    pub fn as_url_params(&self) -> String {
+        format!("term={}", self.term,)
+    }
+
+    pub fn get_apikey(&self) -> &str {
+        &self.apikey
+    }
+}
 
 /// Params for search.
 #[derive(Debug)]

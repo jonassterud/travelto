@@ -5,7 +5,7 @@ use crate::kiwi_api;
 mod config;
 mod flight;
 mod state;
-pub use config::Config;
+pub use config::{Config, Keys};
 pub use flight::Flight;
 pub use state::State;
 

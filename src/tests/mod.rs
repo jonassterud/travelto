@@ -7,7 +7,11 @@ fn test_api_get_flights() {
 }
 
 #[test]
-fn test_kiwi_api_locations() {}
+fn test_kiwi_api_locations_query() {
+    let keys = api::Keys::from_env().unwrap();
+    let config = kiwi_api::LocationsQueryParams::new(keys.get_kiwi_search_key(), "NO");
+    kiwi_api::locations_query(&config).unwrap();
+}
 
 #[test]
 fn test_kiwi_api_search() {

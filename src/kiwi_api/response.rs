@@ -4,7 +4,15 @@ use serde::Deserialize;
 
 /// Response struct for locations.
 #[derive(Debug, Deserialize)]
-pub struct LocationsResponse {}
+pub struct LocationsResponse {
+    pub locations: Vec<LocationsResponseLocation>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct LocationsResponseLocation {
+    pub code: String,
+    pub name: String,
+}
 
 /// Response struct for search.
 #[derive(Debug, Deserialize)]
