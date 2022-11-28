@@ -33,8 +33,11 @@ pub struct SearchParams {
     fly_to: String,
     date_from: String,
     date_to: String,
-    return_from: Option<String>,
-    return_to: Option<String>,
+    return_from: String,
+    return_to: String,
+    adults: u32,
+    children: u32,
+    infants: u32,
 }
 
 impl From<super::api::Config> for SearchParams {
@@ -45,8 +48,11 @@ impl From<super::api::Config> for SearchParams {
             fly_to: val.to,
             date_from: val.departure_date.0,
             date_to: val.departure_date.1,
-            return_from: val.return_date.as_ref().map(|x| x.0.to_owned()),
-            return_to: val.return_date.as_ref().map(|x| x.1.to_owned()),
+            return_from: val.return_date.0,
+            return_to: val.return_date.1,
+            adults: val.adults,
+            children: val.children,
+            infants: val.infants,
         }
     }
 }
@@ -56,13 +62,16 @@ impl SearchParams {
     pub fn as_url_params(&self) -> String {
         // TODO: Probably a better way to do this with macros.
         format!(
-            "fly_from={}&fly_to={}&date_from={}&date_to={}&return_from={}&return_to={}",
+            "fly_from={}&fly_to={}&date_from={}&date_to={}&return_from={}&return_to={}&adults={}&children={}&infants={}",
             self.fly_from,
             self.fly_to,
             self.date_from,
             self.date_to,
-            self.return_from.as_ref().unwrap_or(&String::new()),
-            self.return_to.as_ref().unwrap_or(&String::new()),
+            self.return_from,
+            self.return_to,
+            self.adults,
+            self.children,
+            self.infants,
         )
     }
 

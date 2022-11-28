@@ -14,8 +14,14 @@ pub struct Config {
     pub to: String,
     /// Departure date range in "dd/mm/yyyy" format.
     pub departure_date: (String, String),
-    /// Return date range in "dd/mm/yyyy" format.
-    pub return_date: Option<(String, String)>,
+    /// Return date range in "dd/mm/yyyy" format. Can be empty.
+    pub return_date: (String, String),
+    /// Amount of adults.
+    pub adults: u32,
+    /// Amount of children.
+    pub children: u32,
+    /// Amount of infants.
+    pub infants: u32,
     /// API keys.
     #[serde(skip)]
     pub keys: Keys,
@@ -34,13 +40,19 @@ impl Config {
         from: &str,
         to: &str,
         departure_date: (&str, &str),
-        return_date: Option<(&str, &str)>,
+        return_date: (&str, &str),
+        adults: u32,
+        children: u32,
+        infants: u32,
     ) -> Result<Config> {
         Ok(Config {
             from: from.to_owned(),
             to: to.to_owned(),
             departure_date: (departure_date.0.to_owned(), departure_date.1.to_owned()),
-            return_date: return_date.map(|x| (x.0.to_owned(), x.1.to_owned())),
+            return_date: (return_date.0.to_owned(), return_date.1.to_owned()),
+            adults,
+            children,
+            infants,
             keys: Keys::from_env()?,
         })
     }

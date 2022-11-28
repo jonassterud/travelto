@@ -5,6 +5,7 @@ pub mod api;
 pub mod kiwi_api;
 
 use anyhow::Result;
+use serde::Deserialize;
 use std::{
     fs::{self, File},
     path::PathBuf,
@@ -25,8 +26,10 @@ async fn main() -> Result<()> {
 
     app.at("/").get(index);
     app.at("/search").get(search);
-    app.at("index_style.css").serve_file("src/www/index_style.css")?;
-    app.at("search_style.css").serve_file("src/www/search_style.css")?;
+    app.at("index_style.css")
+        .serve_file("src/www/index_style.css")?;
+    app.at("search_style.css")
+        .serve_file("src/www/search_style.css")?;
 
     app.listen("127.0.0.1:8080").await?;
 
@@ -65,7 +68,40 @@ async fn index(req: tide::Request<api::State>) -> tide::Result {
 }
 
 async fn search(req: tide::Request<api::State>) -> tide::Result {
-    let config: api::Config = req.query()?;
+    #[derive(Debug, Deserialize)]
+    pub struct Intermediary {
+        pub flight_type: String,
+        pub adults: u32,
+        pub children: u32,
+        pub infants: u32,
+        pub from: String,
+        pub to: String,
+        pub departure_from: String,
+        pub departure_to: Option<String>,
+        pub return_from: Option<String>,
+        pub return_to: Option<String>,
+    }
+
+    impl TryFrom<Intermediary> for api::Config {
+        type Error = anyhow::Error;
+
+        fn try_from(val: Intermediary) -> Result<Self> {
+            api::Config::new(
+                &val.from,
+                &val.to,
+                (&val.departure_from, &val.departure_to.unwrap_or_default()),
+                (
+                    &val.return_from.unwrap_or_default(),
+                    &val.return_to.unwrap_or_default(),
+                ),
+                val.adults,
+                val.children,
+                val.infants,
+            )
+        }
+    }
+
+    let config: api::Config = req.query::<Intermediary>()?.try_into()?;
     let path = PathBuf::from_str(&format!("target/renders/{}.html", config.get_hash()))?;
 
     let update_contents = move |path: &PathBuf| -> Result<String> {
