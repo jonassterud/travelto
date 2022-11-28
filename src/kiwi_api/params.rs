@@ -19,6 +19,7 @@ impl LocationsQueryParams {
         format!("term={}", self.term,)
     }
 
+    /// Get api key.
     pub fn get_apikey(&self) -> &str {
         &self.apikey
     }
@@ -65,6 +66,7 @@ impl SearchParams {
         )
     }
 
+    /// Get api key.
     pub fn get_apikey(&self) -> &str {
         &self.apikey
     }
