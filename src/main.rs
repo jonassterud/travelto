@@ -2,7 +2,7 @@
 mod tests;
 
 pub mod api;
-pub mod endpoint;
+pub mod endpoints;
 pub mod kiwi_api;
 
 use anyhow::Result;
@@ -15,9 +15,10 @@ async fn main() -> Result<()> {
     let state = api::State::with_default_templates()?;
     let mut app = tide::with_state(state);
 
-    app.at("/").get(endpoint::index);
-    app.at("/locations").get(endpoint::locations);
-    app.at("/search").get(endpoint::search);
+    app.at("/").get(endpoints::index);
+    app.at("/locations").get(endpoints::locations);
+    app.at("/search").get(endpoints::search);
+
     app.at("index_style.css")
         .serve_file("src/www/index_style.css")?;
     app.at("index_script.js")
