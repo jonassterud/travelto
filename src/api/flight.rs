@@ -38,7 +38,7 @@ impl TryFrom<crate::kiwi_api::SearchResponse> for Vec<Flight> {
         fn format_date(date: &str) -> Result<String> {
             Ok(date
                 .parse::<chrono::DateTime<chrono::Utc>>()?
-                .format("%A, %b. %e, %R")
+                .format("%d/%m, %R")
                 .to_string())
         }
 

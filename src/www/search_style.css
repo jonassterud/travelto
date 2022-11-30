@@ -56,13 +56,22 @@ div#results {
     border: 4px solid #000000;
 }
 
-.result #price {
+.result .result-left {
+    width: 25%;
+}
+
+.result .result-middle {
+    width: 55%;
+}
+
+.result .result-right {
     background-color: #00ff37;
     border: 4px solid #000000;
     cursor: pointer;
     text-align: center;
+    width: 15%;
 }
 
-.result #price p {
+.result .result-right p {
     color: #000000;
 }

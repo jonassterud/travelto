@@ -13,27 +13,40 @@
         <div id='results'>
             {{#each results}}
                 <div class='result'>
-                    <div>
-                        <p>{{from}}</p>
-                        <p><b>→</b></p>
-                        <p>{{to}}</p>
+                    <div class='result-left'>
+                        <p>{{from}} <b>→</b> {{to}}</p>
+                        {{#if return_date}}
+                            <hr />
+                            <p>{{to}} <b>→</b> {{from}}</p>
+                        {{/if}}
                     </div>
-                    <div>
-                        <p>Departure: {{departure_date}}</p>
-                        <hr />
-                        <p>Return: {{return_date}}</p>
+                    <div class='result-middle'>
+                        <p>Departure:
+                            {{departure_date}}
+                            <b>→</b>
+                            {{departure_arrival_date}}
+                            <br />
+                            <small><i>Duration</i>:
+                                {{departure_duration}}</small>
+                        </p>
+                        {{#if return_date}}
+                            <hr />
+                            <p>Return:
+                                {{return_date}}
+                                <b>→</b>
+                                {{return_arrival_date}}
+                                <br />
+                                <small><i>Duration</i>:
+                                    {{return_duration}}</small></p>
+                        {{/if}}
                     </div>
-                    <div>
-                        <div
-                            id='price'
-                            onclick='parent.open("{{link}}")'
-                            target='_blank'
-                        >
-                            <p>{{price}} €</p>
-                        </div>
-                        <p>Duration: {{departure_duration}}</p>
+                    <div
+                        class='result-right'
+                        onclick='parent.open("{{link}}")'
+                        target='_blank'
+                    >
+                        <p>{{price}} €</p>
                     </div>
-
                 </div>
             {{else}}
                 <p>No results found!</p>
