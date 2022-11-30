@@ -3,14 +3,15 @@ use crate::*;
 #[test]
 fn test_api_get_flights() {
     let config =
-        api::Config::new("NO", "DE", ("24/12/2022", "25/12/2022"), ("", ""), 1, 0, 0).unwrap();
+        api::SearchConfig::new("NO", "DE", ("24/12/2022", "25/12/2022"), ("", ""), 1, 0, 0)
+            .unwrap();
     api::get_flights(config).unwrap();
 }
 
 #[test]
 fn test_api_get_locations() {
-    let params = kiwi_api::LocationsQueryParams::new("PRG").unwrap();
-    api::get_locations(params).unwrap();
+    let config = api::LocationConfig::new("NO").unwrap();
+    api::get_locations(config).unwrap();
 }
 
 #[test]

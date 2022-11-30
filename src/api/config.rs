@@ -5,9 +5,9 @@ use std::{
     hash::{Hash, Hasher},
 };
 
-/// Config
+/// Configuration used for search APIs.
 #[derive(Debug, Clone, Deserialize, Hash)]
-pub struct Config {
+pub struct SearchConfig {
     /// Place to travel from.
     pub from: String,
     /// Place to travel to.
@@ -27,8 +27,8 @@ pub struct Config {
     pub keys: Keys,
 }
 
-impl Config {
-    /// Create a new [`Config`].
+impl SearchConfig {
+    /// Create a new [`SearchConfig`].
     ///
     /// # Arguments
     ///
@@ -44,8 +44,8 @@ impl Config {
         adults: u32,
         children: u32,
         infants: u32,
-    ) -> Result<Config> {
-        Ok(Config {
+    ) -> Result<SearchConfig> {
+        Ok(SearchConfig {
             from: from.to_owned(),
             to: to.to_owned(),
             departure_date: (departure_date.0.to_owned(), departure_date.1.to_owned()),
@@ -62,6 +62,30 @@ impl Config {
         let mut hasher = DefaultHasher::new();
         self.hash(&mut hasher);
         hasher.finish()
+    }
+}
+
+/// Configuration used for location search APIs.
+#[derive(Debug, Clone, Deserialize, Hash)]
+pub struct LocationConfig {
+    /// Term to search for.
+    pub term: String,
+    /// API keys.
+    #[serde(skip)]
+    pub keys: Keys,
+}
+
+impl LocationConfig {
+    /// Create a new [`LocationConfig`].
+    ///
+    /// # Arguments
+    ///
+    /// * `term` - term to search for.
+    pub fn new(term: &str) -> Result<LocationConfig> {
+        Ok(LocationConfig {
+            term: term.to_owned(),
+            keys: Keys::from_env()?,
+        })
     }
 }
 

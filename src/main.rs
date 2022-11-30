@@ -76,7 +76,7 @@ async fn locations(req: tide::Request<api::State>) -> tide::Result {
         pub term: String,
     }
 
-    impl TryFrom<Intermediary> for kiwi_api::LocationsQueryParams {
+    impl TryFrom<Intermediary> for api::LocationConfig {
         type Error = anyhow::Error;
 
         fn try_from(val: Intermediary) -> Result<Self> {
@@ -84,8 +84,8 @@ async fn locations(req: tide::Request<api::State>) -> tide::Result {
         }
     }
 
-    let params: kiwi_api::LocationsQueryParams = req.query::<Intermediary>()?.try_into()?;
-    let results = api::get_locations(params)?;
+    let config: api::LocationConfig = req.query::<Intermediary>()?.try_into()?;
+    let results = api::get_locations(config)?;
 
     Ok(tide::Response::builder(200)
         .content_type(mime::JSON)
@@ -107,11 +107,11 @@ async fn search(req: tide::Request<api::State>) -> tide::Result {
         pub return_to: Option<String>,
     }
 
-    impl TryFrom<Intermediary> for api::Config {
+    impl TryFrom<Intermediary> for api::SearchConfig {
         type Error = anyhow::Error;
 
         fn try_from(val: Intermediary) -> Result<Self> {
-            api::Config::new(
+            Self::new(
                 &val.from,
                 &val.to,
                 (&val.departure_from, &val.departure_to.unwrap_or_default()),
@@ -126,7 +126,7 @@ async fn search(req: tide::Request<api::State>) -> tide::Result {
         }
     }
 
-    let config: api::Config = req.query::<Intermediary>()?.try_into()?;
+    let config: api::SearchConfig = req.query::<Intermediary>()?.try_into()?;
     let path = PathBuf::from_str(&format!("target/renders/{}.html", config.get_hash()))?;
 
     let update_contents = move |path: &PathBuf| -> Result<String> {

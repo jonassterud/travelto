@@ -28,6 +28,15 @@ impl LocationsQueryParams {
     }
 }
 
+impl From<super::api::LocationConfig> for LocationsQueryParams {
+    fn from(val: super::api::LocationConfig) -> Self {
+        Self {
+            apikey: val.keys.get_kiwi_search_key().to_owned(),
+            term: val.term,
+        }
+    }
+}
+
 /// Params for search.
 #[derive(Debug)]
 pub struct SearchParams {
@@ -43,10 +52,10 @@ pub struct SearchParams {
     infants: u32,
 }
 
-impl From<super::api::Config> for SearchParams {
-    fn from(val: super::api::Config) -> Self {
+impl From<super::api::SearchConfig> for SearchParams {
+    fn from(val: super::api::SearchConfig) -> Self {
         Self {
-            apikey: val.keys.get_kiwi_search_key().to_string(),
+            apikey: val.keys.get_kiwi_search_key().to_owned(),
             fly_from: val.from,
             fly_to: val.to,
             date_from: val.departure_date.0,
