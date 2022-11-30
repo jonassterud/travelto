@@ -19,7 +19,7 @@ pub async fn locations(req: tide::Request<api::State>) -> tide::Result {
     }
 
     let config: api::LocationConfig = req.query::<Intermediary>()?.try_into()?;
-    let results = api::get_locations(config)?;
+    let results = api::get_locations(config).unwrap_or_default(); // should match instead
 
     Ok(tide::Response::builder(200)
         .content_type(mime::JSON)

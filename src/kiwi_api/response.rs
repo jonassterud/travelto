@@ -10,7 +10,7 @@ pub struct LocationsResponse {
 
 #[derive(Debug, Deserialize)]
 pub struct LocationsResponseLocation {
-    pub code: String,
+    pub id: String,
     pub name: String,
 }
 

@@ -11,7 +11,11 @@
         <header>
             <a href='/'><h1>Travelto</h1></a>
         </header>
-        <form action='search' method='get'>
+        <form
+            action='search'
+            method='get'
+            onkeydown="return event.key != 'Enter';"
+        >
             <div id='top-inputs'>
                 <div>
                     <input
@@ -73,15 +77,21 @@
                     name='from'
                     id='from'
                     placeholder='From'
+                    list='from-list'
+                    oninput='update_list(this, "from-list")'
                     required
                 />
+                <datalist id='from-list'></datalist>
                 <input
                     type='text'
                     name='to'
                     id='to'
                     placeholder='To'
+                    list='to-list'
+                    oninput='update_list(this, "to-list")'
                     required
                 />
+                <datalist id='to-list'></datalist>
             </div>
             <div id='bottom-inputs'>
                 <div id='depart-range'>
