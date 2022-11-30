@@ -1,3 +1,6 @@
+use crate::api;
+use anyhow::Result;
+
 /// Params for locations query.
 #[derive(Debug, Clone)]
 pub struct LocationsQueryParams {
@@ -7,11 +10,11 @@ pub struct LocationsQueryParams {
 
 impl LocationsQueryParams {
     /// Create a new [`LocationsQueryParams`].
-    pub fn new(apikey: &str, term: &str) -> LocationsQueryParams {
-        LocationsQueryParams {
-            apikey: apikey.to_owned(),
+    pub fn new(term: &str) -> Result<LocationsQueryParams> {
+        Ok(LocationsQueryParams {
+            apikey: api::Keys::from_env()?.get_kiwi_search_key().to_owned(),
             term: term.to_owned(),
-        }
+        })
     }
 
     /// Get parameters as a single URL compatible string.
@@ -58,6 +61,33 @@ impl From<super::api::Config> for SearchParams {
 }
 
 impl SearchParams {
+    /// Create a new [`SearchParams`].
+    #[allow(clippy::too_many_arguments)]
+    pub fn new(
+        fly_from: &str,
+        fly_to: &str,
+        date_from: &str,
+        date_to: &str,
+        return_from: &str,
+        return_to: &str,
+        adults: u32,
+        children: u32,
+        infants: u32,
+    ) -> Result<SearchParams> {
+        Ok(SearchParams {
+            apikey: api::Keys::from_env()?.get_kiwi_search_key().to_owned(),
+            fly_from: fly_from.to_owned(),
+            fly_to: fly_to.to_owned(),
+            date_from: date_from.to_owned(),
+            date_to: date_to.to_owned(),
+            return_from: return_from.to_owned(),
+            return_to: return_to.to_owned(),
+            adults,
+            children,
+            infants,
+        })
+    }
+
     /// Get parameters as a single URL compatible string.
     pub fn as_url_params(&self) -> String {
         // TODO: Probably a better way to do this with macros.

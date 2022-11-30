@@ -25,6 +25,7 @@ async fn main() -> Result<()> {
     let mut app = tide::with_state(state);
 
     app.at("/").get(index);
+    app.at("/locations").get(locations);
     app.at("/search").get(search);
     app.at("index_style.css")
         .serve_file("src/www/index_style.css")?;
@@ -69,6 +70,29 @@ async fn index(req: tide::Request<api::State>) -> tide::Result {
         .build())
 }
 
+async fn locations(req: tide::Request<api::State>) -> tide::Result {
+    #[derive(Debug, Deserialize)]
+    pub struct Intermediary {
+        pub term: String,
+    }
+
+    impl TryFrom<Intermediary> for kiwi_api::LocationsQueryParams {
+        type Error = anyhow::Error;
+
+        fn try_from(val: Intermediary) -> Result<Self> {
+            Self::new(&val.term)
+        }
+    }
+
+    let params: kiwi_api::LocationsQueryParams = req.query::<Intermediary>()?.try_into()?;
+    let results = api::get_locations(params)?;
+
+    Ok(tide::Response::builder(200)
+        .content_type(mime::JSON)
+        .body(serde_json::to_string(&results)?)
+        .build())
+}
+
 async fn search(req: tide::Request<api::State>) -> tide::Result {
     #[derive(Debug, Deserialize)]
     pub struct Intermediary {
@@ -106,7 +130,7 @@ async fn search(req: tide::Request<api::State>) -> tide::Result {
     let path = PathBuf::from_str(&format!("target/renders/{}.html", config.get_hash()))?;
 
     let update_contents = move |path: &PathBuf| -> Result<String> {
-        let results = api::get_flights(&config).unwrap_or_default();
+        let results = api::get_flights(config).unwrap_or_default();
 
         // Create directory
         let mut dir_path = path.clone();
