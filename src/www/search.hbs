@@ -10,14 +10,30 @@
         <header>
             <a href='/'><h1>Travelto</h1></a>
         </header>
-        <div>
+        <div id='results'>
             {{#each results}}
-                <div onclick='parent.open("{{link}}")' target='_blank'>
-                    <span>{{from}}</span>
-                    <span>{{to}}</span>
-                    <span>{{departure_date}}</span>
-                    <span>{{return_date}}</span>
-                    <span>{{price}}</span>
+                <div class='result'>
+                    <div>
+                        <p>{{from}}</p>
+                        <p><b>→</b></p>
+                        <p>{{to}}</p>
+                    </div>
+                    <div>
+                        <p>Departure: {{departure_date}}</p>
+                        <hr />
+                        <p>Return: {{return_date}}</p>
+                    </div>
+                    <div>
+                        <div
+                            id='price'
+                            onclick='parent.open("{{link}}")'
+                            target='_blank'
+                        >
+                            <p>{{price}} €</p>
+                        </div>
+                        <p>Duration: {{departure_duration}}</p>
+                    </div>
+
                 </div>
             {{else}}
                 <p>No results found!</p>

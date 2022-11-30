@@ -35,3 +35,34 @@ footer {
     text-align: left;
     font-size: 12px;
 }
+
+/* Results */
+
+div#results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    padding: 10px 20px 10px 20px;
+    margin-bottom: 5px;
+    background-color: #31353a;
+    border: 4px solid #000000;
+}
+
+.result #price {
+    background-color: #00ff37;
+    border: 4px solid #000000;
+    cursor: pointer;
+    text-align: center;
+}
+
+.result #price p {
+    color: #000000;
+}

@@ -40,9 +40,9 @@ pub struct SearchResponseData {
 #[derive(Debug, Deserialize)]
 pub struct SearchResponseDataDuration {
     #[serde(rename = "departure")]
-    pub departure_secs: u32,
+    pub departure_secs: u64,
     #[serde(rename = "return")]
-    pub return_secs: u32,
+    pub return_secs: u64,
     #[serde(rename = "total")]
-    pub total_secs: u32,
+    pub total_secs: u64,
 }
