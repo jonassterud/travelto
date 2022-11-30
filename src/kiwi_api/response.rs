@@ -10,7 +10,7 @@ pub struct LocationsResponse {
 
 #[derive(Debug, Deserialize)]
 pub struct LocationsResponseLocation {
-    pub code: String,
+    pub id: String,
     pub name: String,
 }
 
@@ -27,6 +27,7 @@ pub struct SearchResponseData {
     pub local_arrival: String,
     pub local_departure: String,
     pub price: u32,
+    pub route: Vec<SearchResponseDataRoute>,
     #[serde(rename = "flyTo")]
     pub fly_to: String,
     #[serde(rename = "flyFrom")]
@@ -40,9 +41,21 @@ pub struct SearchResponseData {
 #[derive(Debug, Deserialize)]
 pub struct SearchResponseDataDuration {
     #[serde(rename = "departure")]
-    pub departure_secs: u32,
+    pub departure_secs: u64,
     #[serde(rename = "return")]
-    pub return_secs: u32,
+    pub return_secs: u64,
     #[serde(rename = "total")]
-    pub total_secs: u32,
+    pub total_secs: u64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SearchResponseDataRoute {
+    pub local_arrival: String,
+    pub local_departure: String,
+    #[serde(rename = "return")]
+    pub is_return: u32,
+    #[serde(rename = "flyTo")]
+    pub fly_to: String,
+    #[serde(rename = "flyFrom")]
+    pub fly_from: String,
 }

@@ -5,24 +5,30 @@ use std::{
     hash::{Hash, Hasher},
 };
 
-/// Config
+/// Configuration used for search APIs.
 #[derive(Debug, Clone, Deserialize, Hash)]
-pub struct Config {
+pub struct SearchConfig {
     /// Place to travel from.
     pub from: String,
     /// Place to travel to.
     pub to: String,
     /// Departure date range in "dd/mm/yyyy" format.
     pub departure_date: (String, String),
-    /// Return date range in "dd/mm/yyyy" format.
-    pub return_date: Option<(String, String)>,
+    /// Return date range in "dd/mm/yyyy" format. Can be empty.
+    pub return_date: (String, String),
+    /// Amount of adults.
+    pub adults: u32,
+    /// Amount of children.
+    pub children: u32,
+    /// Amount of infants.
+    pub infants: u32,
     /// API keys.
     #[serde(skip)]
     pub keys: Keys,
 }
 
-impl Config {
-    /// Create a new [`Config`].
+impl SearchConfig {
+    /// Create a new [`SearchConfig`].
     ///
     /// # Arguments
     ///
@@ -34,13 +40,19 @@ impl Config {
         from: &str,
         to: &str,
         departure_date: (&str, &str),
-        return_date: Option<(&str, &str)>,
-    ) -> Result<Config> {
-        Ok(Config {
+        return_date: (&str, &str),
+        adults: u32,
+        children: u32,
+        infants: u32,
+    ) -> Result<SearchConfig> {
+        Ok(SearchConfig {
             from: from.to_owned(),
             to: to.to_owned(),
             departure_date: (departure_date.0.to_owned(), departure_date.1.to_owned()),
-            return_date: return_date.map(|x| (x.0.to_owned(), x.1.to_owned())),
+            return_date: (return_date.0.to_owned(), return_date.1.to_owned()),
+            adults,
+            children,
+            infants,
             keys: Keys::from_env()?,
         })
     }
@@ -50,6 +62,30 @@ impl Config {
         let mut hasher = DefaultHasher::new();
         self.hash(&mut hasher);
         hasher.finish()
+    }
+}
+
+/// Configuration used for location search APIs.
+#[derive(Debug, Clone, Deserialize, Hash)]
+pub struct LocationConfig {
+    /// Term to search for.
+    pub term: String,
+    /// API keys.
+    #[serde(skip)]
+    pub keys: Keys,
+}
+
+impl LocationConfig {
+    /// Create a new [`LocationConfig`].
+    ///
+    /// # Arguments
+    ///
+    /// * `term` - term to search for.
+    pub fn new(term: &str) -> Result<LocationConfig> {
+        Ok(LocationConfig {
+            term: term.to_owned(),
+            keys: Keys::from_env()?,
+        })
     }
 }
 

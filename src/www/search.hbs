@@ -1,23 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background-color: #0D1117;
-        }
-
-        h1, h2, h3, h4, h5, h6, p, span, form {
-            color: #C9D1D9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-    </style>
-    <title>Travelto</title>
-</head>
-<body>
-    <a href="/"><h1>Travelto</h1></a>
-    
-</body>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8' />
+        <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <link rel='stylesheet' href='search_style.css' />
+        <title>Travelto</title>
+    </head>
+    <body>
+        <header>
+            <a href='/'><h1>Travelto</h1></a>
+        </header>
+        <div id='results'>
+            {{#each results}}
+                <div class='result'>
+                    <div class='result-left'>
+                        <p>{{from}} <b>→</b> {{to}}</p>
+                        {{#if return_date}}
+                            <hr />
+                            <p>{{to}} <b>→</b> {{from}}</p>
+                        {{/if}}
+                    </div>
+                    <div class='result-middle'>
+                        <p>Departure:
+                            {{departure_date}}
+                            <b>→</b>
+                            {{departure_arrival_date}}
+                            <br />
+                            <small><i>Duration</i>:
+                                {{departure_duration}}</small>
+                        </p>
+                        {{#if return_date}}
+                            <hr />
+                            <p>Return:
+                                {{return_date}}
+                                <b>→</b>
+                                {{return_arrival_date}}
+                                <br />
+                                <small><i>Duration</i>:
+                                    {{return_duration}}</small></p>
+                        {{/if}}
+                    </div>
+                    <div
+                        class='result-right'
+                        onclick='parent.open("{{link}}")'
+                        target='_blank'
+                    >
+                        <p>{{price}} €</p>
+                    </div>
+                </div>
+            {{else}}
+                <p>No results found!</p>
+            {{/each}}
+        </div>
+        <footer>
+            <a href='https://github.com/jonassterud/travelto'>Source code</a>
+        </footer>
+    </body>
 </html>

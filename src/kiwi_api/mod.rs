@@ -14,10 +14,7 @@ const BASE_URL: &str = "https://api.tequila.kiwi.com";
 /// Kiwi.com locations query API.
 ///
 /// [Resource](https://tequila.kiwi.com/portal/docs/tequila_api/locations_api)
-pub fn locations_query(
-    params: &(impl Into<LocationsQueryParams> + Clone),
-) -> Result<LocationsResponse> {
-    let params: LocationsQueryParams = params.clone().into();
+pub fn locations_query(params: LocationsQueryParams) -> Result<LocationsResponse> {
     let path = format!("{}/locations/query?{}", BASE_URL, params.as_url_params());
 
     let resp = ureq::get(&path)
@@ -31,8 +28,7 @@ pub fn locations_query(
 /// Kiwi.com search API.
 ///
 /// [Resource](https://tequila.kiwi.com/portal/docs/tequila_api/search_api)
-pub fn search(params: &(impl Into<SearchParams> + Clone)) -> Result<SearchResponse> {
-    let params: SearchParams = params.clone().into();
+pub fn search(params: SearchParams) -> Result<SearchResponse> {
     let path = format!("{}/v2/search?{}", BASE_URL, params.as_url_params());
 
     let resp = ureq::get(&path)

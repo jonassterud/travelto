@@ -3,8 +3,8 @@ use serde::Serialize;
 /// Location
 #[derive(Debug, Serialize)]
 pub struct Location {
-    /// Location code.
-    pub code: String,
+    /// Location id.
+    pub id: String,
     /// Location name.
     pub name: String,
 }
@@ -15,7 +15,7 @@ impl From<crate::kiwi_api::LocationsResponse> for Vec<Location> {
         val.locations
             .iter()
             .map(|data_val| Location {
-                code: data_val.code.to_owned(),
+                id: data_val.id.to_owned(),
                 name: data_val.name.to_owned(),
             })
             .collect()

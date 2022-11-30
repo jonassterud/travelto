@@ -6,7 +6,7 @@ mod config;
 mod flight;
 mod location;
 mod state;
-pub use config::{Config, Keys};
+pub use config::{Keys, LocationConfig, SearchConfig};
 pub use flight::Flight;
 pub use location::Location;
 pub use state::State;
@@ -14,9 +14,9 @@ pub use state::State;
 use anyhow::Result;
 
 /// Combines flight results from different APIs into a single vector.
-pub fn get_flights(config: &Config) -> Result<Vec<Flight>> {
+pub fn get_flights(config: SearchConfig) -> Result<Vec<Flight>> {
     let mut out = vec![];
-    out.append(&mut kiwi_api::search(config)?.into());
+    out.append(&mut kiwi_api::search(config.into())?.try_into()?);
     // ...
 
     Ok(out)
@@ -25,11 +25,9 @@ pub fn get_flights(config: &Config) -> Result<Vec<Flight>> {
 /// Search trough locations by using the Kiwi.com locations API.
 ///
 /// [Resource](https://tequila.kiwi.com/portal/docs/tequila_api/locations_api)
-pub fn get_locations(
-    params: &(impl Into<kiwi_api::LocationsQueryParams> + Clone),
-) -> Result<Vec<Location>> {
+pub fn get_locations(config: LocationConfig) -> Result<Vec<Location>> {
     let mut out = vec![];
-    out.append(&mut kiwi_api::locations_query(params)?.into());
+    out.append(&mut kiwi_api::locations_query(config.into())?.into());
 
     Ok(out)
 }
