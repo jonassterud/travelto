@@ -1,0 +1,9 @@
+font name: sen-extrabold
+font link: http://www.philatype.com/#sen
+font author: Philatype
+font author site: http://www.philatype.com/
+icon designer: Martin Vanco
+icon designer link: /vancom
+fontColor: {"hex":"#488eff"}
+bgColor: {"hex":"#0d1117"}
+iconColor: {"hex":"#488eff"}

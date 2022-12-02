@@ -1,19 +1,24 @@
 //! Kiwi search API.
 
-use crate::api;
+#![deny(missing_docs)]
 
 mod params;
 mod response;
+
+use crate::api;
+use anyhow::Result;
 pub use params::*;
 pub use response::*;
-
-use anyhow::Result;
 
 const BASE_URL: &str = "https://api.tequila.kiwi.com";
 
 /// Kiwi.com locations query API.
 ///
-/// [Resource](https://tequila.kiwi.com/portal/docs/tequila_api/locations_api)
+/// [Read more](https://tequila.kiwi.com/portal/docs/tequila_api/locations_api).
+///
+/// # Arguments
+///
+/// * `params` - [`LocationsQueryParams`].
 pub fn locations_query(params: LocationsQueryParams) -> Result<LocationsResponse> {
     let path = format!("{}/locations/query?{}", BASE_URL, params.as_url_params());
 

@@ -1,4 +1,4 @@
-# Travelto
+![Travelto](src/www/logo/cover.png)
 
 ## About
 **Travelto** tries to find the cheapest way to travel between two destinations.

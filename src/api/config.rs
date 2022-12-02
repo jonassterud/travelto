@@ -113,7 +113,7 @@ impl Keys {
         }
     }
 
-    /// Create a new [`Keys`] from environmental variables.
+    /// Create [`Keys`] from environmental variables.
     pub fn from_env() -> Result<Keys> {
         dotenv::dotenv().ok();
 
