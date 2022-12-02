@@ -12,9 +12,15 @@ use tide::http::mime;
 
 const MAX_MODIFIED_DIFF_SECS: u64 = 60 * 10;
 
+/// Search endpoint.
+///
+/// # Arguments
+///
+/// * `req` - a [`tide::Request`] containing the [`api::State`].
 pub async fn search(req: tide::Request<api::State>) -> tide::Result {
+    /// Intermediary struct to catch response data.
     #[derive(Debug, Deserialize)]
-    pub struct Intermediary {
+    struct Intermediary {
         pub adults: u32,
         pub children: u32,
         pub infants: u32,
@@ -82,6 +88,7 @@ pub async fn search(req: tide::Request<api::State>) -> tide::Result {
                     data
                 }
             }
+            // Update contents if file doesn't exist
             Err(_) => update_contents(&path)?,
         }
     };

@@ -1,6 +1,6 @@
 use serde::Serialize;
 
-/// Location
+/// Location.
 #[derive(Debug, Serialize)]
 pub struct Location {
     /// Location id.
@@ -9,7 +9,6 @@ pub struct Location {
     pub name: String,
 }
 
-/// Transform a Kiwi locations response into a vector of api::Location's.
 impl From<crate::kiwi_api::LocationsResponse> for Vec<Location> {
     fn from(val: crate::kiwi_api::LocationsResponse) -> Self {
         val.locations

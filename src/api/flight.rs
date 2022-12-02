@@ -26,7 +26,6 @@ pub struct Flight {
     pub link: String,
 }
 
-/// Transform a Kiwi search response into a vector of api::Flight's.
 impl TryFrom<crate::kiwi_api::SearchResponse> for Vec<Flight> {
     type Error = anyhow::Error;
 

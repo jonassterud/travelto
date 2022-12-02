@@ -8,6 +8,11 @@ use std::{
 };
 use tide::http::mime;
 
+/// Index endpoint.
+///
+/// # Arguments
+///
+/// * `req` - a [`tide::Request`] containing the [`api::State`].
 pub async fn index(req: tide::Request<api::State>) -> tide::Result {
     let path = PathBuf::from_str("target/renders/index.html")?;
 

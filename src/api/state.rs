@@ -4,6 +4,7 @@ use handlebars::Handlebars;
 /// Tide state.
 #[derive(Clone)]
 pub struct State {
+    /// Handlebars registry.
     pub reg: Handlebars<'static>,
 }
 

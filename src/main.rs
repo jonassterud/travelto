@@ -12,9 +12,11 @@ async fn main() -> Result<()> {
     #[cfg(debug_assertions)]
     tide::log::start();
 
+    // Create server
     let state = api::State::with_default_templates()?;
     let mut app = tide::with_state(state);
 
+    // Add routes
     app.at("/").get(endpoints::index);
     app.at("/locations").get(endpoints::locations);
     app.at("/search").get(endpoints::search);
@@ -26,6 +28,7 @@ async fn main() -> Result<()> {
     app.at("search_style.css")
         .serve_file("src/www/search_style.css")?;
 
+    // Listen for connections
     app.listen("127.0.0.1:8080").await?;
 
     Ok(())

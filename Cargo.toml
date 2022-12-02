@@ -10,11 +10,11 @@ license = "MIT"
 [dependencies]
 anyhow = { version = "1.0" }
 dotenv = { version = "0.15" }
+async-std = { version = "1.8", features = ["attributes"] }
 ureq = { version = "2.5", features = ["json"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0" }
+chrono = { version = "0.4" }
 tide = { version = "0.16" }
 tide-handlebars = { version = "0.9" }
 handlebars = { version = "4.3" }
-async-std = { version = "1.8", features = ["attributes"] }
-chrono = { version = "0.4" }
