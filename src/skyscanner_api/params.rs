@@ -1,7 +1,6 @@
 use crate::api;
 use anyhow::Result;
 
-
 /// Params for search.
 #[derive(Debug)]
 pub struct SearchParams {

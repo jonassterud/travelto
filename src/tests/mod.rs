@@ -61,5 +61,5 @@ fn test_skyscanner_api_search() {
         Some("2022/12/25".to_owned()),
     )
     .unwrap();
-    dbg!(skyscanner_api::search(params).unwrap());
+    skyscanner_api::search(params).unwrap();
 }

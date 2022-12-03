@@ -3,15 +3,15 @@ use serde::Deserialize;
 /// Response struct for search.
 #[derive(Debug, Deserialize)]
 pub struct SearchResponse {
-    /// Vector of itineraries.
-    pub itineraries: Vec<Itinerary>,
+    /// Itineraries.
+    pub itineraries: Itineraries,
     /// Context.
     pub context: Context,
 }
 
-/// Itinerary
+/// Itineraries.
 #[derive(Debug, Deserialize)]
-pub struct Itinerary {
+pub struct Itineraries {
     /// Vector of itinerary buckets.
     pub buckets: Vec<ItineraryBucket>,
 }
@@ -54,7 +54,7 @@ pub struct ItemLeg {
     pub destination: Location,
     /// Duration in minutes.
     #[serde(rename = "durationInMinutes")]
-    pub duration_mins: u32,
+    pub duration_mins: u64,
     /// Departure date.
     pub departure: String,
     /// Arrival date.
@@ -69,7 +69,6 @@ pub struct Location {
     /// Location name.
     pub name: String,
 }
-
 
 /// Context.
 #[derive(Debug, Deserialize)]
