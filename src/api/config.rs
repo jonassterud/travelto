@@ -110,7 +110,7 @@ pub struct Keys {
     kiwi_search: String,
     kiwi_multicity: String,
     kiwi_nomad: String,
-    rapid_skyscanner_key: String,
+    rapid_key: String,
     rapid_skyscanner_host: String,
 }
 
@@ -127,7 +127,7 @@ impl Keys {
             kiwi_search: String::new(),
             kiwi_multicity: String::new(),
             kiwi_nomad: String::new(),
-            rapid_skyscanner_key: String::new(),
+            rapid_key: String::new(),
             rapid_skyscanner_host: String::new(),
         }
     }
@@ -140,7 +140,7 @@ impl Keys {
             kiwi_search: std::env::var("KIWI_SEARCH")?,
             kiwi_multicity: std::env::var("KIWI_MULTICITY")?,
             kiwi_nomad: std::env::var("KIWI_NOMAD")?,
-            rapid_skyscanner_key: std::env::var("RAPID_SKYSCANNER_KEY")?,
+            rapid_key: std::env::var("RAPID_KEY")?,
             rapid_skyscanner_host: std::env::var("RAPID_SKYSCANNER_HOST")?,
         })
     }
@@ -161,8 +161,8 @@ impl Keys {
     }
 
     /// Get Rapid Skyscanner API key.
-    pub fn get_rapid_skyscanner_key(&self) -> &str {
-        &self.rapid_skyscanner_key
+    pub fn get_rapid_key(&self) -> &str {
+        &self.rapid_key
     }
 
     /// Get Rapid Skyscanner API host.

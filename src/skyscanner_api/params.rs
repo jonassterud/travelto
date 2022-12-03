@@ -23,7 +23,7 @@ pub struct SearchParams {
 impl From<super::api::SearchConfig> for SearchParams {
     fn from(val: super::api::SearchConfig) -> Self {
         Self {
-            key: val.keys.get_rapid_skyscanner_key().to_owned(),
+            key: val.keys.get_rapid_key().to_owned(),
             host: val.keys.get_rapid_skyscanner_host().to_owned(),
             adults: val.adults,
             origin: val.from,                   // oops, must be IATA code
