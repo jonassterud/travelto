@@ -45,7 +45,7 @@ impl SearchParams {
         return_date: Option<String>,
     ) -> Result<SearchParams> {
         Ok(SearchParams {
-            key: api::Keys::from_env()?.get_kiwi_search_key().to_owned(),
+            key: api::Keys::from_env()?.get_rapid_key().to_owned(),
             host: api::Keys::from_env()?
                 .get_rapid_skyscanner_host()
                 .to_owned(),
