@@ -5,7 +5,8 @@ use anyhow::Result;
 #[derive(Debug, Clone)]
 pub struct LocationsQueryParams {
     apikey: String,
-    term: String,
+    /// Query term.
+    pub term: String,
 }
 
 impl LocationsQueryParams {
@@ -41,14 +42,23 @@ impl From<super::api::LocationConfig> for LocationsQueryParams {
 #[derive(Debug)]
 pub struct SearchParams {
     apikey: String,
+    /// Location to fly from.
     fly_from: String,
+    /// Location to fly to.
     fly_to: String,
+    /// Start of departure date range.
     date_from: String,
-    date_to: String,
-    return_from: String,
-    return_to: String,
+    /// End of departure date range.
+    date_to: Option<String>,
+    /// Start of return date range.
+    return_from: Option<String>,
+    /// End of return date range.
+    return_to: Option<String>,
+    /// Number of adults.
     adults: u32,
+    /// Number of children.
     children: u32,
+    /// Number of infants.
     infants: u32,
 }
 
@@ -58,10 +68,10 @@ impl From<super::api::SearchConfig> for SearchParams {
             apikey: val.keys.get_kiwi_search_key().to_owned(),
             fly_from: val.from,
             fly_to: val.to,
-            date_from: val.departure_date.0,
-            date_to: val.departure_date.1,
-            return_from: val.return_date.0,
-            return_to: val.return_date.1,
+            date_from: val.departure_from.format("%d/%m/%Y").to_string(),
+            date_to: val.departure_to.map(|x| x.format("%d/%m/%Y").to_string()),
+            return_from: val.return_from.map(|x| x.format("%d/%m/%Y").to_string()),
+            return_to: val.return_to.map(|x| x.format("%d/%m/%Y").to_string()),
             adults: val.adults,
             children: val.children,
             infants: val.infants,
@@ -73,24 +83,24 @@ impl SearchParams {
     /// Create a new [`SearchParams`].
     #[allow(clippy::too_many_arguments)]
     pub fn new(
-        fly_from: &str,
-        fly_to: &str,
-        date_from: &str,
-        date_to: &str,
-        return_from: &str,
-        return_to: &str,
+        fly_from: String,
+        fly_to: String,
+        date_from: String,
+        date_to: Option<String>,
+        return_from: Option<String>,
+        return_to: Option<String>,
         adults: u32,
         children: u32,
         infants: u32,
     ) -> Result<SearchParams> {
         Ok(SearchParams {
             apikey: api::Keys::from_env()?.get_kiwi_search_key().to_owned(),
-            fly_from: fly_from.to_owned(),
-            fly_to: fly_to.to_owned(),
-            date_from: date_from.to_owned(),
-            date_to: date_to.to_owned(),
-            return_from: return_from.to_owned(),
-            return_to: return_to.to_owned(),
+            fly_from,
+            fly_to,
+            date_from,
+            date_to,
+            return_from,
+            return_to,
             adults,
             children,
             infants,
@@ -105,9 +115,9 @@ impl SearchParams {
             self.fly_from,
             self.fly_to,
             self.date_from,
-            self.date_to,
-            self.return_from,
-            self.return_to,
+            self.date_to.as_ref().unwrap_or(&String::new()),
+            self.return_from.as_ref().unwrap_or(&String::new()),
+            self.return_to.as_ref().unwrap_or(&String::new()),
             self.adults,
             self.children,
             self.infants,

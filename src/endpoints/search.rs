@@ -1,6 +1,7 @@
 use crate::api;
 
 use anyhow::Result;
+use chrono::NaiveDate;
 use serde::Deserialize;
 use std::{
     fs::{self, File},
@@ -18,7 +19,7 @@ const MAX_MODIFIED_DIFF_SECS: u64 = 60 * 10;
 ///
 /// * `req` - a [`tide::Request`] containing the [`api::State`].
 pub async fn search(req: tide::Request<api::State>) -> tide::Result {
-    /// Intermediary struct to catch response data.
+    /// Intermediary struct to catch query data.
     #[derive(Debug, Deserialize)]
     struct Intermediary {
         pub adults: u32,
@@ -37,13 +38,16 @@ pub async fn search(req: tide::Request<api::State>) -> tide::Result {
 
         fn try_from(val: Intermediary) -> Result<Self> {
             Self::new(
-                &val.from,
-                &val.to,
-                (&val.departure_from, &val.departure_to.unwrap_or_default()),
-                (
-                    &val.return_from.unwrap_or_default(),
-                    &val.return_to.unwrap_or_default(),
-                ),
+                val.from,
+                val.to,
+                val.departure_from.parse::<NaiveDate>()?,
+                val.departure_to
+                    .map(|x| x.parse::<NaiveDate>())
+                    .transpose()?,
+                val.return_from
+                    .map(|x| x.parse::<NaiveDate>())
+                    .transpose()?,
+                val.return_to.map(|x| x.parse::<NaiveDate>()).transpose()?,
                 val.adults,
                 val.children,
                 val.infants,

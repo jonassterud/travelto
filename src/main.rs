@@ -4,6 +4,7 @@ mod tests;
 pub mod api;
 pub mod endpoints;
 pub mod kiwi_api;
+pub mod skyscanner_api;
 
 use anyhow::Result;
 
