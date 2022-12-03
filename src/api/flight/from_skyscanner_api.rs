@@ -6,6 +6,7 @@ impl TryFrom<crate::skyscanner_api::SearchResponse> for Vec<super::Flight> {
 
     fn try_from(val: crate::skyscanner_api::SearchResponse) -> Result<Self> {
         val.itineraries
+            .ok_or_else(|| anyhow!("missing itineraries"))?
             .buckets
             .iter()
             .flat_map(|x| &x.items)

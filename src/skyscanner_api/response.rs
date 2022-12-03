@@ -4,7 +4,7 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 pub struct SearchResponse {
     /// Itineraries.
-    pub itineraries: Itineraries,
+    pub itineraries: Option<Itineraries>,
     /// Context.
     pub context: Context,
 }
