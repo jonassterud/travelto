@@ -27,10 +27,10 @@ impl From<super::api::SearchConfig> for SearchParams {
             key: val.keys.get_rapid_skyscanner_key().to_owned(),
             host: val.keys.get_rapid_skyscanner_host().to_owned(),
             adults: val.adults,
-            origin: val.from,    // oops, must be IATA code
-            destination: val.to, // oops, must be IATA code
+            origin: val.from,                   // oops, must be IATA code
+            destination: val.to,                // oops, must be IATA code
             departure_date: val.departure_from, // doesn't support range
-            return_date: val.return_from, // doesn't support range
+            return_date: val.return_from,       // doesn't support range
         }
     }
 }
@@ -67,7 +67,8 @@ impl SearchParams {
             self.origin,
             self.destination,
             self.departure_date.format("%Y-%m-%d"),
-            self.return_date.map_or(String::new(), |x| x.format("%Y-%m-%d").to_string()),
+            self.return_date
+                .map_or(String::new(), |x| x.format("%Y-%m-%d").to_string()),
         )
     }
 
