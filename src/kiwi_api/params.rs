@@ -1,12 +1,12 @@
 use crate::api;
 use anyhow::Result;
-use chrono::NaiveDate;
 
 /// Params for locations query.
 #[derive(Debug, Clone)]
 pub struct LocationsQueryParams {
     apikey: String,
-    term: String,
+    /// Query term.
+    pub term: String,
 }
 
 impl LocationsQueryParams {
@@ -42,14 +42,23 @@ impl From<super::api::LocationConfig> for LocationsQueryParams {
 #[derive(Debug)]
 pub struct SearchParams {
     apikey: String,
+    /// Location to fly from.
     fly_from: String,
+    /// Location to fly to.
     fly_to: String,
-    date_from: NaiveDate,
-    date_to: Option<NaiveDate>,
-    return_from: Option<NaiveDate>,
-    return_to: Option<NaiveDate>,
+    /// Start of departure date range.
+    date_from: String,
+    /// End of departure date range.
+    date_to: Option<String>,
+    /// Start of return date range.
+    return_from: Option<String>,
+    /// End of return date range.
+    return_to: Option<String>,
+    /// Number of adults.
     adults: u32,
+    /// Number of children.
     children: u32,
+    /// Number of infants.
     infants: u32,
 }
 
@@ -59,10 +68,10 @@ impl From<super::api::SearchConfig> for SearchParams {
             apikey: val.keys.get_kiwi_search_key().to_owned(),
             fly_from: val.from,
             fly_to: val.to,
-            date_from: val.departure_from,
-            date_to: val.departure_to,
-            return_from: val.return_from,
-            return_to: val.return_to,
+            date_from: val.departure_from.format("%d/%m/%Y").to_string(),
+            date_to: val.departure_to.map(|x| x.format("%d/%m/%Y").to_string()),
+            return_from: val.return_from.map(|x| x.format("%d/%m/%Y").to_string()),
+            return_to: val.return_to.map(|x| x.format("%d/%m/%Y").to_string()),
             adults: val.adults,
             children: val.children,
             infants: val.infants,
@@ -76,10 +85,10 @@ impl SearchParams {
     pub fn new(
         fly_from: String,
         fly_to: String,
-        date_from: NaiveDate,
-        date_to: Option<NaiveDate>,
-        return_from: Option<NaiveDate>,
-        return_to: Option<NaiveDate>,
+        date_from: String,
+        date_to: Option<String>,
+        return_from: Option<String>,
+        return_to: Option<String>,
         adults: u32,
         children: u32,
         infants: u32,
@@ -105,10 +114,10 @@ impl SearchParams {
             "fly_from={}&fly_to={}&date_from={}&date_to={}&return_from={}&return_to={}&adults={}&children={}&infants={}",
             self.fly_from,
             self.fly_to,
-            self.date_from.format("%d/%m/%Y"),
-            self.date_to.map_or(String::new(), |x| x.format("%d/%m/%Y").to_string()),
-            self.return_from.map_or(String::new(), |x| x.format("%d/%m/%Y").to_string()),
-            self.return_to.map_or(String::new(), |x| x.format("%d/%m/%Y").to_string()),
+            self.date_from,
+            self.date_to.as_ref().unwrap_or(&String::new()),
+            self.return_from.as_ref().unwrap_or(&String::new()),
+            self.return_to.as_ref().unwrap_or(&String::new()),
             self.adults,
             self.children,
             self.infants,

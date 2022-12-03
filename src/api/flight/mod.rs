@@ -1,3 +1,4 @@
+mod common;
 mod from_kiwi_api;
 mod from_skyscanner_api;
 

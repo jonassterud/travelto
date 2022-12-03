@@ -1,6 +1,5 @@
 use crate::api;
 use anyhow::Result;
-use chrono::NaiveDate;
 
 /// Params for search.
 #[derive(Debug)]
@@ -16,9 +15,9 @@ pub struct SearchParams {
     /// Destination airport IATA code
     destination: String,
     /// Departure date.
-    departure_date: NaiveDate,
+    departure_date: String,
     /// Return date.
-    return_date: Option<NaiveDate>,
+    return_date: Option<String>,
 }
 
 impl From<super::api::SearchConfig> for SearchParams {
@@ -29,8 +28,8 @@ impl From<super::api::SearchConfig> for SearchParams {
             adults: val.adults,
             origin: val.from,                   // oops, must be IATA code
             destination: val.to,                // oops, must be IATA code
-            departure_date: val.departure_from, // doesn't support range
-            return_date: val.return_from,       // doesn't support range
+            departure_date: val.departure_from.format("%Y-%m-%d").to_string(), // doesn't support range
+            return_date: val.return_from.map(|x| x.format("%Y-%m-%d").to_string()),       // doesn't support range
         }
     }
 }
@@ -42,8 +41,8 @@ impl SearchParams {
         adults: u32,
         origin: String,
         destination: String,
-        departure_date: NaiveDate,
-        return_date: Option<NaiveDate>,
+        departure_date: String,
+        return_date: Option<String>,
     ) -> Result<SearchParams> {
         Ok(SearchParams {
             key: api::Keys::from_env()?.get_kiwi_search_key().to_owned(),
@@ -66,9 +65,8 @@ impl SearchParams {
             self.adults,
             self.origin,
             self.destination,
-            self.departure_date.format("%Y-%m-%d"),
-            self.return_date
-                .map_or(String::new(), |x| x.format("%Y-%m-%d").to_string()),
+            self.departure_date,
+            self.return_date.as_ref().unwrap_or(&String::new()),
         )
     }
 
