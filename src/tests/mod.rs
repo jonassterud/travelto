@@ -1,7 +1,7 @@
 use crate::*;
 
 /// Test [`api::get_flights`].
-#[ignore]
+#[ignore = "avoid spam"]
 #[test]
 fn test_api_get_flights() {
     let config = api::SearchConfig::new(
@@ -20,7 +20,7 @@ fn test_api_get_flights() {
 }
 
 /// Test [`api::get_locations`].
-#[ignore]
+#[ignore = "avoid spam"]
 #[test]
 fn test_api_get_locations() {
     let config = api::LocationConfig::new("NO").unwrap();
@@ -28,7 +28,7 @@ fn test_api_get_locations() {
 }
 
 /// Test [`kiwi_api::locations_query`].
-#[ignore]
+#[ignore = "avoid spam"]
 #[test]
 fn test_kiwi_api_locations_query() {
     let params = kiwi_api::LocationsQueryParams::new("PRG").unwrap();
@@ -36,7 +36,7 @@ fn test_kiwi_api_locations_query() {
 }
 
 /// Test [`kiwi_api::search`].
-#[ignore]
+#[ignore = "avoid spam"]
 #[test]
 fn test_kiwi_api_search() {
     let params = kiwi_api::SearchParams::new(
@@ -55,7 +55,7 @@ fn test_kiwi_api_search() {
 }
 
 /// Test [`skyscanner_api::search`].
-#[ignore]
+#[ignore = "avoid spam"]
 #[test]
 fn test_skyscanner_api_search() {
     let params = skyscanner_api::SearchParams::new(
