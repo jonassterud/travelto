@@ -28,7 +28,7 @@ pub struct SearchResponse {
 /// Search response.
 #[derive(Debug, Deserialize)]
 pub struct SearchResponseData {
-    /// Deep link?
+    /// Booking link.
     pub deep_link: String,
     /// Duration of flight.
     pub duration: SearchResponseDataDuration,

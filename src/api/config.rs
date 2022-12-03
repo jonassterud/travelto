@@ -12,10 +12,14 @@ pub struct SearchConfig {
     pub from: String,
     /// Place to travel to.
     pub to: String,
-    /// Departure date range in "dd/mm/yyyy" format.
-    pub departure_date: (String, String),
-    /// Return date range in "dd/mm/yyyy" format. Can be empty.
-    pub return_date: (String, String),
+    /// Start of departure date range in "dd/mm/yyyy" format.
+    pub departure_from: String,
+    /// Start of departure date range in "dd/mm/yyyy" format.
+    pub departure_to: Option<String>,
+    /// Start of return date range in "dd/mm/yyyy" format.
+    pub return_from: Option<String>,
+    /// End of return date range in "dd/mm/yyyy" format.
+    pub return_to: Option<String>,
     /// Amount of adults.
     pub adults: u32,
     /// Amount of children.
@@ -36,20 +40,25 @@ impl SearchConfig {
     /// * `to` - place to travel to.
     /// * `departure_date` - date range to depart between.
     /// * `return_date` - date range to return between.
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
-        from: &str,
-        to: &str,
-        departure_date: (&str, &str),
-        return_date: (&str, &str),
+        from: String,
+        to: String,
+        departure_from: String,
+        departure_to: Option<String>,
+        return_from: Option<String>,
+        return_to: Option<String>,
         adults: u32,
         children: u32,
         infants: u32,
     ) -> Result<SearchConfig> {
         Ok(SearchConfig {
-            from: from.to_owned(),
-            to: to.to_owned(),
-            departure_date: (departure_date.0.to_owned(), departure_date.1.to_owned()),
-            return_date: (return_date.0.to_owned(), return_date.1.to_owned()),
+            from,
+            to,
+            departure_from,
+            departure_to,
+            return_from,
+            return_to,
             adults,
             children,
             infants,
@@ -95,6 +104,8 @@ pub struct Keys {
     kiwi_search: String,
     kiwi_multicity: String,
     kiwi_nomad: String,
+    rapid_skyscanner_key: String,
+    rapid_skyscanner_host: String,
 }
 
 impl Default for Keys {
@@ -110,6 +121,8 @@ impl Keys {
             kiwi_search: String::new(),
             kiwi_multicity: String::new(),
             kiwi_nomad: String::new(),
+            rapid_skyscanner_key: String::new(),
+            rapid_skyscanner_host: String::new(),
         }
     }
 
@@ -121,6 +134,8 @@ impl Keys {
             kiwi_search: std::env::var("KIWI_SEARCH")?,
             kiwi_multicity: std::env::var("KIWI_MULTICITY")?,
             kiwi_nomad: std::env::var("KIWI_NOMAD")?,
+            rapid_skyscanner_key: std::env::var("RAPID_SKYSCANNER_KEY")?,
+            rapid_skyscanner_host: std::env::var("RAPID_SKYSCANNER_HOST")?,
         })
     }
 
@@ -137,5 +152,15 @@ impl Keys {
     /// Get Kiwi nomad API key.
     pub fn get_kiwi_nomad_key(&self) -> &str {
         &self.kiwi_nomad
+    }
+
+    /// Get Rapid Skyscanner API key.
+    pub fn get_rapid_skyscanner_key(&self) -> &str {
+        &self.rapid_skyscanner_key
+    }
+
+    /// Get Rapid Skyscanner API host.
+    pub fn get_rapid_skyscanner_host(&self) -> &str {
+        &self.rapid_skyscanner_host
     }
 }

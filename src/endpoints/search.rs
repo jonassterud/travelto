@@ -37,13 +37,12 @@ pub async fn search(req: tide::Request<api::State>) -> tide::Result {
 
         fn try_from(val: Intermediary) -> Result<Self> {
             Self::new(
-                &val.from,
-                &val.to,
-                (&val.departure_from, &val.departure_to.unwrap_or_default()),
-                (
-                    &val.return_from.unwrap_or_default(),
-                    &val.return_to.unwrap_or_default(),
-                ),
+                val.from,
+                val.to,
+                val.departure_from,
+                val.departure_to,
+                val.return_from,
+                val.return_to,
                 val.adults,
                 val.children,
                 val.infants,
