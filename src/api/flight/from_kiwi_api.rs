@@ -1,32 +1,6 @@
 use anyhow::Result;
-use serde::Serialize;
 
-/// Flight
-#[derive(Debug, Serialize)]
-pub struct Flight {
-    /// "City name, airport code" to depart from.
-    pub from: String,
-    /// "City name, airport code" to arrive to.
-    pub to: String,
-    /// Departure date.
-    pub departure_date: String,
-    /// Arrival date.
-    pub departure_arrival_date: String,
-    /// Duration of flight departure.
-    pub departure_duration: String,
-    /// Return date.
-    pub return_date: Option<String>,
-    /// Return arrival date.
-    pub return_arrival_date: Option<String>,
-    /// Duration of flight return.
-    pub return_duration: Option<String>,
-    /// Price of flight.
-    pub price: u32,
-    /// Link to booking site.
-    pub link: String,
-}
-
-impl TryFrom<crate::kiwi_api::SearchResponse> for Vec<Flight> {
+impl TryFrom<crate::kiwi_api::SearchResponse> for Vec<super::Flight> {
     type Error = anyhow::Error;
 
     fn try_from(val: crate::kiwi_api::SearchResponse) -> Result<Self> {
@@ -43,8 +17,8 @@ impl TryFrom<crate::kiwi_api::SearchResponse> for Vec<Flight> {
 
         val.data
             .iter()
-            .map(|x| -> Result<Flight> {
-                Ok(Flight {
+            .map(|x| -> Result<super::Flight> {
+                Ok(super::Flight {
                     from: format!("{}, {}", x.city_from, x.fly_from),
                     to: format!("{}, {}", x.city_to, x.fly_to),
                     departure_date: format_date(&x.local_departure)?,
