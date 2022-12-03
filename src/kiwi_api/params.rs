@@ -1,5 +1,6 @@
 use crate::api;
 use anyhow::Result;
+use chrono::NaiveDate;
 
 /// Params for locations query.
 #[derive(Debug, Clone)]
@@ -43,10 +44,10 @@ pub struct SearchParams {
     apikey: String,
     fly_from: String,
     fly_to: String,
-    date_from: String,
-    date_to: Option<String>,
-    return_from: Option<String>,
-    return_to: Option<String>,
+    date_from: NaiveDate,
+    date_to: Option<NaiveDate>,
+    return_from: Option<NaiveDate>,
+    return_to: Option<NaiveDate>,
     adults: u32,
     children: u32,
     infants: u32,
@@ -75,10 +76,10 @@ impl SearchParams {
     pub fn new(
         fly_from: String,
         fly_to: String,
-        date_from: String,
-        date_to: Option<String>,
-        return_from: Option<String>,
-        return_to: Option<String>,
+        date_from: NaiveDate,
+        date_to: Option<NaiveDate>,
+        return_from: Option<NaiveDate>,
+        return_to: Option<NaiveDate>,
         adults: u32,
         children: u32,
         infants: u32,
@@ -104,10 +105,10 @@ impl SearchParams {
             "fly_from={}&fly_to={}&date_from={}&date_to={}&return_from={}&return_to={}&adults={}&children={}&infants={}",
             self.fly_from,
             self.fly_to,
-            self.date_from,
-            self.date_to.as_ref().unwrap_or(&String::new()),
-            self.return_from.as_ref().unwrap_or(&String::new()),
-            self.return_to.as_ref().unwrap_or(&String::new()),
+            self.date_from.format("%d/%m/%Y"),
+            self.date_to.map_or(String::new(), |x| x.format("%d/%m/%Y").to_string()),
+            self.return_from.map_or(String::new(), |x| x.format("%d/%m/%Y").to_string()),
+            self.return_to.map_or(String::new(), |x| x.format("%d/%m/%Y").to_string()),
             self.adults,
             self.children,
             self.infants,
