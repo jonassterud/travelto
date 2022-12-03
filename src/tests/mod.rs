@@ -5,8 +5,8 @@ use crate::*;
 #[test]
 fn test_api_get_flights() {
     let config = api::SearchConfig::new(
-        "NO".to_owned(),
-        "DE".to_owned(),
+        "MUC".to_owned(),
+        "BER".to_owned(),
         chrono::NaiveDate::from_ymd_opt(2022, 12, 24).unwrap(),
         chrono::NaiveDate::from_ymd_opt(2022, 12, 25),
         None,
@@ -63,7 +63,7 @@ fn test_skyscanner_api_search() {
         "MUC".to_owned(),
         "BER".to_owned(),
         "2022-12-24".to_owned(),
-        Some("2022-12-24".to_owned())
+        Some("2022-12-24".to_owned()),
     )
     .unwrap();
     skyscanner_api::search(params).unwrap();

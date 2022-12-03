@@ -6,7 +6,7 @@ mod params;
 mod response;
 
 use crate::api;
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 pub use params::*;
 pub use response::*;
 
@@ -33,17 +33,11 @@ pub fn search(params: SearchParams) -> Result<SearchResponse> {
             .call()?
             .into_json::<SearchResponse>()?;
 
-        match resp.context.status.as_str() {
-            "incomplete" => {
-                let dur = std::time::Duration::from_secs(DELAY_BETWEEN_REQUESTS);
-                std::thread::sleep(dur);
-            }
-            "complete" => {
-                return Ok(resp);
-            }
-            _ => {
-                return Err(anyhow!("unexpected status: {}", resp.context.status));
-            }
+        if resp.context.status == "complete" {
+            return Ok(resp);
+        } else {
+            let dur = std::time::Duration::from_secs(DELAY_BETWEEN_REQUESTS);
+            std::thread::sleep(dur);
         }
     }
 }
