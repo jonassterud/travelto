@@ -1,20 +1,10 @@
+use super::common::*;
 use anyhow::Result;
 
 impl TryFrom<crate::kiwi_api::SearchResponse> for Vec<super::Flight> {
     type Error = anyhow::Error;
 
     fn try_from(val: crate::kiwi_api::SearchResponse) -> Result<Self> {
-        fn format_duration(seconds: u64) -> String {
-            format!("{}h {}m", (seconds / 60) / 60, (seconds / 60) % 60)
-        }
-
-        fn format_date(date: &str) -> Result<String> {
-            Ok(date
-                .parse::<chrono::DateTime<chrono::Utc>>()?
-                .format("%d/%m, %R")
-                .to_string())
-        }
-
         val.data
             .iter()
             .map(|x| -> Result<super::Flight> {
