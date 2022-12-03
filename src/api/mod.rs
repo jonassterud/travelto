@@ -7,7 +7,7 @@ mod flight;
 mod location;
 mod state;
 
-use crate::kiwi_api;
+use crate::{kiwi_api, skyscanner_api};
 use anyhow::Result;
 pub use config::*;
 pub use flight::*;
@@ -17,8 +17,8 @@ pub use state::*;
 /// Combines flight results from different APIs into a single vector.
 pub fn get_flights(config: SearchConfig) -> Result<Vec<Flight>> {
     let mut out = vec![];
-    out.append(&mut kiwi_api::search(config.into())?.try_into()?);
-    // ...
+    out.append(&mut kiwi_api::search(config.clone().into())?.try_into()?);
+    out.append(&mut skyscanner_api::search(config.into())?.try_into()?);
 
     Ok(out)
 }
