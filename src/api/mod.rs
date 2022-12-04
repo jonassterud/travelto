@@ -30,5 +30,8 @@ pub fn get_locations(config: LocationConfig) -> Result<Vec<Location>> {
     let mut out = vec![];
     out.append(&mut kiwi_api::locations_query(config.into())?.into());
 
+    // Filter out certain locations
+    out.retain(|x| matches!(x.variant.as_str(), "country" | "city" | "airport"));
+
     Ok(out)
 }
