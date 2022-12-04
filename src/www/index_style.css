@@ -1,47 +1,39 @@
-form {
+main {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
     width: 70%;
-    height: 30%;
-    padding: 40px;
+    padding: 40px 40px 10px 40px;
+    color: inherit;
     background-color: #31353a;
     border: 4px solid #000000;
 }
 
-form input {
-    background-color: #d9d9d9;
-    border: none;
-}
-
-/* Top inputs */
-
-form > div#top-inputs {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-
-    height: 30%;
-    margin-bottom: 30px;
-}
-
-form > div#top-inputs > div {
+main #flight-types {
     display: flex;
     justify-content: space-evenly;
-    width: 70%;
 }
 
-form > div#top-inputs input[type='radio'] + label {
+main #flight-types > label {
     cursor: pointer;
 }
 
-form > div#top-inputs input[type='radio']:checked + label {
+main #flight-types input:checked + label {
     color: #639bd3;
 }
 
-form > div#top-inputs select {
+main form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+
+main form div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+main form #passengers select {
     border: none;
     background-color: transparent;
     color: inherit;
@@ -50,43 +42,46 @@ form > div#top-inputs select {
     padding: 5px;
 }
 
-/* Middle inputs */
-
-form > div#middle-inputs {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-
-form > div#middle-inputs input {
-    width: 45%;
-    font-size: 18px;
-    padding: 5px;
-}
-
-/* Bottom inputs */
-
-form > div#bottom-inputs {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-
-form > div#bottom-inputs label {
-    font-size: 14px;
-}
-
-/* Submit button */
-
-form button[type='submit'] {
-    cursor: pointer;
-    font-size: 40px;
-    position: absolute;
-    bottom: 25%;
+main form #places input {
     border: none;
-    background-color: transparent;
+    background-color: #d9d9d9;
+    color: #000000;
+    font-size: inherit;
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 20px;
+    width: 40%;
 }
 
-form button[type='submit']:hover {
-    transform: scale(1.1);
+main form #dates {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: inherit;
+}
+
+main form #dates .date-range {
+    display: flex;
+    align-items: center;
+    width: 45%;
+}
+
+main form #dates .date-range input {
+    cursor: pointer;
+}
+
+main form button[type='submit'] {
+    color: inherit;
+    border: none;
+    width: max-content;
+    background-color: transparent;
+    font-size: 30px;
+    margin-top: 60px;
+    align-self: center;
+    cursor: pointer;
+}
+
+main form button[type='submit']:hover {
+    color: #639bd3;
+    transform: scale(1.05);
 }

@@ -31,7 +31,8 @@ h6,
 p,
 span,
 a,
-form {
+form,
+label {
     color: #c9d1d9;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

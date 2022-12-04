@@ -1,11 +1,15 @@
 function show_return_range() {
-    let return_range = document.querySelector('#return-range')
-    return_range.removeAttribute('hidden')
+    let children = [...document.querySelector('#return-range').children]
+    children.forEach((child) => {
+        child.removeAttribute('hidden')
+    })
 }
 
 function hide_return_range() {
-    let return_range = document.querySelector('#return-range')
-    return_range.setAttribute('hidden', true)
+    let children = [...document.querySelector('#return-range').children]
+    children.forEach((child) => {
+        child.setAttribute('hidden', 'true')
+    })
 }
 
 function update_list(input, list_id) {

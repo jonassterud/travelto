@@ -3,9 +3,9 @@
         <meta charset='UTF-8' />
         <meta http-equiv='X-UA-Compatible' content='IE=edge' />
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-        <script src='index_script.js'></script>
         <link rel='stylesheet' href='common_style.css' />
         <link rel='stylesheet' href='index_style.css' />
+        <script src='index_script.js'></script>
         <title>Travelto</title>
     </head>
     <body>
@@ -14,38 +14,31 @@
                 <img width='30%' src='logo.svg' alt='Travelto' />
             </a>
         </header>
-        <form
-            action='search'
-            method='get'
-            onkeydown="return event.key != 'Enter';"
-        >
-            <div id='top-inputs'>
-                <div>
-                    <input
-                        type='radio'
-                        name='flight-type'
-                        id='one-way'
-                        onchange='hide_return_range()'
-                        value=''
-                        form=''
-                        checked
-                        hidden
-                    />
-                    <label for='one-way'>One-way</label>
-                    <input
-                        type='radio'
-                        name='flight-type'
-                        id='return'
-                        onchange='show_return_range()'
-                        value=''
-                        form=''
-                        hidden
-                    />
-                    <label for='return'>Return</label>
-                </div>
-                <div>
+        <main>
+            <div id='flight-types'>
+                <input
+                    type='radio'
+                    id='one-way'
+                    name='flight-type'
+                    onchange='hide_return_range()'
+                    checked
+                    hidden
+                />
+                <label for='one-way'>One-way</label>
+                <input
+                    type='radio'
+                    id='return'
+                    name='flight-type'
+                    onchange='show_return_range()'
+                    hidden
+                />
+                <label for='return'>Return</label>
+            </div>
+            <hr width='100%' />
+            <form action='search' method='get'>
+                <div id='passengers'>
                     <select name='adults' id='adults'>
-                        <option value='0' label='No adults'>0</option>
+                        <option value='0' label='0 adults'>0</option>
                         <option value='1' label='1 adult' selected>1</option>
                         <option value='2' label='2 adults'>2</option>
                         <option value='3' label='3 adults'>3</option>
@@ -53,11 +46,7 @@
                         <option value='5' label='5 adults'>5</option>
                     </select>
                     <select name='children' id='children'>
-                        <option
-                            value='0'
-                            label='No children'
-                            selected
-                        >0</option>
+                        <option value='0' label='0 children' selected>0</option>
                         <option value='1' label='1 child'>1</option>
                         <option value='2' label='2 children'>2</option>
                         <option value='3' label='3 children'>3</option>
@@ -65,7 +54,7 @@
                         <option value='5' label='5 children'>5</option>
                     </select>
                     <select name='infants' id='infants'>
-                        <option value='0' label='No infants' selected>0</option>
+                        <option value='0' label='0 infants' selected>0</option>
                         <option value='1' label='1 infant'>1</option>
                         <option value='2' label='2 infants'>2</option>
                         <option value='3' label='3 infants'>3</option>
@@ -73,50 +62,64 @@
                         <option value='5' label='5 infants'>5</option>
                     </select>
                 </div>
-            </div>
-            <div id='middle-inputs'>
-                <input
-                    type='text'
-                    name='from'
-                    id='from'
-                    placeholder='From'
-                    list='from-list'
-                    oninput='update_list(this, "from-list")'
-                    required
-                />
-                <datalist id='from-list'></datalist>
-                <input
-                    type='text'
-                    name='to'
-                    id='to'
-                    placeholder='To'
-                    list='to-list'
-                    oninput='update_list(this, "to-list")'
-                    required
-                />
-                <datalist id='to-list'></datalist>
-            </div>
-            <div id='bottom-inputs'>
-                <div id='depart-range'>
-                    <label>Depart between</label>
+                <div id='places'>
                     <input
-                        type='date'
-                        name='departure_from'
-                        id='departure_from'
+                        type='text'
+                        name='from'
+                        id='from'
+                        placeholder='From'
+                        list='from-list'
+                        oninput='update_list(this, "from-list")'
                         required
                     />
-                    <label>and</label>
-                    <input type='date' name='departure_to' id='departure_to' />
+                    <datalist id='from-list'></datalist>
+                    <input
+                        type='text'
+                        name='to'
+                        id='to'
+                        placeholder='To'
+                        list='to-list'
+                        oninput='update_list(this, "to-list")'
+                        required
+                    />
+                    <datalist id='to-list'></datalist>
                 </div>
-                <div id='return-range' hidden='true'>
-                    <label>Return between</label>
-                    <input type='date' name='return_from' id='return_from' />
-                    <label>and</label>
-                    <input type='date' name='return_to' id='return_to' />
+                <div id='dates'>
+                    <div class='date-range'>
+                        <label for='departure_from'>Depart between</label>
+                        <input
+                            type='date'
+                            name='departure_from'
+                            id='departure_from'
+                            required
+                        />
+                        <label for='departure_to'>and</label>
+                        <input
+                            type='date'
+                            name='departure_to'
+                            id='departure_to'
+                        />
+                    </div>
+                    <div class='date-range' id='return-range' hidden='true'>
+                        <label hidden>Return between</label>
+                        <input
+                            type='date'
+                            name='return_from'
+                            id='return_from'
+                            hidden
+                        />
+                        <label hidden>and</label>
+                        <input
+                            type='date'
+                            name='return_to'
+                            id='return_to'
+                            hidden
+                        />
+                    </div>
                 </div>
-            </div>
-            <button type='submit'>🔎</button>
-        </form>
+                <button type='submit'>🔎 Search!</button>
+            </form>
+        </main>
         <footer>
             <a href='https://github.com/jonassterud/travelto'>Source code</a>
         </footer>
