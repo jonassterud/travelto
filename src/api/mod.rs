@@ -20,6 +20,8 @@ pub fn get_flights(config: SearchConfig) -> Result<Vec<Flight>> {
     out.append(&mut kiwi_api::search(config.clone().into()).map_or(Ok(vec![]), |x| x.try_into())?);
     out.append(&mut skyscanner_api::search(config.into()).map_or(Ok(vec![]), |x| x.try_into())?);
 
+    out.sort_by(|a, b| a.price.cmp(&b.price));
+
     Ok(out)
 }
 
