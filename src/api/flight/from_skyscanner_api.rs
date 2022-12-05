@@ -22,9 +22,13 @@ impl TryFrom<crate::skyscanner_api::SearchResponse> for Vec<super::Flight> {
                     departure_date: format_date(&departure_leg.departure)?,
                     departure_arrival_date: format_date(&departure_leg.arrival)?,
                     departure_duration: format_duration(departure_leg.duration_mins * 60),
+                    departure_duration_min: departure_leg.duration_mins,
                     return_date: return_leg.map(|l| format_date(&l.departure)).transpose()?,
                     return_arrival_date: return_leg.map(|l| format_date(&l.arrival)).transpose()?,
                     return_duration: return_leg.map(|l| format_duration(&l.duration_mins * 60)),
+                    return_duration_min: return_leg.map_or(0, |l| l.duration_mins),
+                    total_duration_min: departure_leg.duration_mins
+                        + return_leg.map_or(0, |l| l.duration_mins),
                     price: x.price.raw,
                     link: x.deeplink.to_owned(),
                 })

@@ -31,6 +31,8 @@ async fn main() -> Result<()> {
         .serve_file("src/www/index_script.js")?;
     app.at("search_style.css")
         .serve_file("src/www/search_style.css")?;
+    app.at("search_script.js")
+        .serve_file("src/www/search_script.js")?;
     app.at("logo.svg")
         .serve_file("src/www/logo/vector/default-monochrome.svg")?;
 

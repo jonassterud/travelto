@@ -14,6 +14,7 @@ impl TryFrom<crate::kiwi_api::SearchResponse> for Vec<super::Flight> {
                     departure_date: format_date(&x.local_departure)?,
                     departure_arrival_date: format_date(&x.local_arrival)?,
                     departure_duration: format_duration(x.duration.departure_secs),
+                    departure_duration_min: x.duration.departure_secs / 60,
                     return_date: x
                         .route
                         .iter()
@@ -27,6 +28,8 @@ impl TryFrom<crate::kiwi_api::SearchResponse> for Vec<super::Flight> {
                         .map(|r| format_date(&r.local_arrival))
                         .transpose()?, // assumes last route in vector is final
                     return_duration: Some(format_duration(x.duration.return_secs)),
+                    return_duration_min: x.duration.return_secs / 60,
+                    total_duration_min: (x.duration.return_secs + x.duration.departure_secs) / 60,
                     price: x.price,
                     link: x.deep_link.to_owned(),
                 })

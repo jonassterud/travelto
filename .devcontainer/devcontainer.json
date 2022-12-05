@@ -13,15 +13,25 @@
 	],
 	"customizations": {
 		"vscode": {
-			"settings": { 
+			"settings": {
 				"lldb.executable": "/usr/bin/lldb",
 				"files.watcherExclude": {
 					"**/target/**": true
 				},
 				"rust-analyzer.checkOnSave.command": "clippy",
-				"[html][handlebars][javascript][css]": {
-					"editor.defaultFormatter": "esbenp.prettier-vscode",
-					"editor.formatOnSave": true
+				"editor.formatOnSave": true,
+				"html.completion.attributeDefaultValue": "singlequotes",
+				"[html][handlebars]": {
+					"editor.defaultFormatter": "vscode.html-language-features"
+				},
+				"[javascript][javascriptreact][typescript]": {
+					"editor.defaultFormatter": "vscode.typescript-language-features"
+				},
+				"[json][jsonc]": {
+					"editor.defaultFormatter": "vscode.json-language-features"
+				},
+				"[css][scss][less]": {
+					"editor.defaultFormatter": "vscode.css-language-features"
 				}
 			},
 			"extensions": [
@@ -29,8 +39,7 @@
 				"mutantdino.resourcemonitor",
 				"rust-lang.rust-analyzer",
 				"tamasfe.even-better-toml",
-				"serayuzgur.crates",
-				"esbenp.prettier-vscode"
+				"serayuzgur.crates"
 			]
 		}
 	},

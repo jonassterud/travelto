@@ -17,8 +17,10 @@ pub use state::*;
 /// Combines flight results from different APIs into a single vector.
 pub fn get_flights(config: SearchConfig) -> Result<Vec<Flight>> {
     let mut out = vec![];
-    out.append(&mut kiwi_api::search(config.clone().into())?.try_into()?);
-    out.append(&mut skyscanner_api::search(config.into())?.try_into()?);
+    out.append(&mut kiwi_api::search(config.clone().into()).map_or(Ok(vec![]), |x| x.try_into())?);
+    out.append(&mut skyscanner_api::search(config.into()).map_or(Ok(vec![]), |x| x.try_into())?);
+
+    out.sort_by(|a, b| a.price.cmp(&b.price));
 
     Ok(out)
 }
@@ -29,6 +31,9 @@ pub fn get_flights(config: SearchConfig) -> Result<Vec<Flight>> {
 pub fn get_locations(config: LocationConfig) -> Result<Vec<Location>> {
     let mut out = vec![];
     out.append(&mut kiwi_api::locations_query(config.into())?.into());
+
+    // Filter out certain locations
+    out.retain(|x| matches!(x.variant.as_str(), "country" | "city" | "airport"));
 
     Ok(out)
 }

@@ -6,16 +6,49 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 pub struct LocationsResponse {
     /// Vector of locations.
-    pub locations: Vec<LocationsResponseLocation>,
+    pub locations: Vec<Location>,
 }
 
 /// Location.
 #[derive(Debug, Deserialize)]
-pub struct LocationsResponseLocation {
+pub struct Location {
     /// Location id.
     pub id: String,
+    /// Location code.
+    pub code: String,
     /// Location name.
     pub name: String,
+    /// Location country.
+    pub country: Option<LocationCountry>,
+    /// Location city.
+    pub city: Option<LocationCity>,
+    /// Location type.
+    #[serde(rename = "type")]
+    pub variant: String,
+}
+
+/// Country.
+#[derive(Debug, Deserialize)]
+pub struct LocationCountry {
+    /// Country id.
+    pub id: String,
+    /// Country name.
+    pub name: String,
+    /// Country code.
+    pub code: String,
+}
+
+/// City.
+#[derive(Debug, Deserialize)]
+pub struct LocationCity {
+    /// City id.
+    pub id: String,
+    /// City name.
+    pub name: String,
+    /// City code.
+    pub code: String,
+    /// Country
+    pub country: LocationCountry,
 }
 
 /// Response struct for search.
