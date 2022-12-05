@@ -13,11 +13,11 @@ main #flight-types {
     justify-content: space-evenly;
 }
 
-main #flight-types > label {
+main #flight-types>label {
     cursor: pointer;
 }
 
-main #flight-types input:checked + label {
+main #flight-types input:checked+label {
     color: #639bd3;
 }
 

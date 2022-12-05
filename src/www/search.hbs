@@ -1,80 +1,76 @@
+<!DOCTYPE html>
 <html lang='en'>
-    <head>
-        <meta charset='UTF-8' />
-        <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-        <link rel='stylesheet' href='common_style.css' />
-        <link rel='stylesheet' href='search_style.css' />
-        <script src='search_script.js'></script>
-        <title>Travelto</title>
-    </head>
-    <body>
-        <header>
-            <a href='/'>
-                <img width='30%' src='logo.svg' alt='Travelto' />
-            </a>
-        </header>
-        <main>
-            <div id='filter-options'>
-                <label for='sort-by'>Sort by: </label>
-                <select name='sort-by' id='sort-by' onchange='sort()'>
-                    <option value='price'>Price</option>
-                    <option value='departure_duration'>Departure duration</option>
-                    <option value='return_duration'>Return duration</option>
-                    <option value='total_duration'>Total duration</option>
-                </select>
+
+<head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel='stylesheet' href='common_style.css' />
+    <link rel='stylesheet' href='search_style.css' />
+    <script src='search_script.js'></script>
+    <title>Travelto</title>
+</head>
+
+<body>
+    <header>
+        <a href='/'>
+            <img width='30%' src='logo.svg' alt='Travelto' />
+        </a>
+    </header>
+    <main>
+        <div id='filter-options'>
+            <label for='sort-by'>Sort by: </label>
+            <select name='sort-by' id='sort-by' onchange='sort()'>
+                <option value='price'>Price</option>
+                <option value='departure_duration'>Departure duration</option>
+                <option value='return_duration'>Return duration</option>
+                <option value='total_duration'>Total duration</option>
+            </select>
+        </div>
+        <div id='results'>
+            {{#each results}}
+            <div class='result' price='{{price}}' departure_duration='{{departure_duration_min}}'
+                return_duration='{{return_duration_min}}' total_duration='{{total_duration_min}}'>
+                <div class='result-left'>
+                    <p>{{from}} <b>→</b> {{to}}</p>
+                    {{#if return_date}}
+                    <hr />
+                    <p>{{to}} <b>→</b> {{from}}</p>
+                    {{/if}}
+                </div>
+                <div class='result-middle'>
+                    <p>Departure:
+                        {{departure_date}}
+                        <b>→</b>
+                        {{departure_arrival_date}}
+                        <br />
+                        <small><i>Duration</i>:
+                            {{departure_duration}}</small>
+                    </p>
+                    {{#if return_date}}
+                    <hr />
+                    <p>Return:
+                        {{return_date}}
+                        <b>→</b>
+                        {{return_arrival_date}}
+                        <br />
+                        <small><i>Duration</i>:
+                            {{return_duration}}</small>
+                    </p>
+                    {{/if}}
+                </div>
+                <div class='result-right' onclick='parent.open("{{link}}")' target='_blank'>
+                    <p>{{price}} €</p>
+                </div>
             </div>
-            <div id='results'>
-                {{#each results}}
-                    <div
-                        class='result'
-                        price='{{price}}'
-                        departure_duration='{{departure_duration_min}}'
-                        return_duration='{{return_duration_min}}'
-                        total_duration='{{total_duration_min}}'
-                    >
-                        <div class='result-left'>
-                            <p>{{from}} <b>→</b> {{to}}</p>
-                            {{#if return_date}}
-                                <hr />
-                                <p>{{to}} <b>→</b> {{from}}</p>
-                            {{/if}}
-                        </div>
-                        <div class='result-middle'>
-                            <p>Departure:
-                                {{departure_date}}
-                                <b>→</b>
-                                {{departure_arrival_date}}
-                                <br />
-                                <small><i>Duration</i>:
-                                    {{departure_duration}}</small>
-                            </p>
-                            {{#if return_date}}
-                                <hr />
-                                <p>Return:
-                                    {{return_date}}
-                                    <b>→</b>
-                                    {{return_arrival_date}}
-                                    <br />
-                                    <small><i>Duration</i>:
-                                        {{return_duration}}</small></p>
-                            {{/if}}
-                        </div>
-                        <div
-                            class='result-right'
-                            onclick='parent.open("{{link}}")'
-                            target='_blank'
-                        >
-                            <p>{{price}} €</p>
-                        </div>
-                    </div>
-                {{else}}
-                    <p>No results found!</p>
-                {{/each}}
-            </div>
-        </main>
-        <footer>
-            <a href='https://github.com/jonassterud/travelto'>Source code</a>
-        </footer>
-    </body>
+            {{else}}
+            <p>No results found!</p>
+            {{/each}}
+        </div>
+    </main>
+    <footer>
+        <a href='https://github.com/jonassterud/travelto'>Source code</a>
+    </footer>
+</body>
+
 </html>
