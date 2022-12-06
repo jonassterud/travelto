@@ -59,7 +59,7 @@ pub async fn search(req: tide::Request<api::State>) -> tide::Result {
     let path = PathBuf::from_str(&format!("target/renders/{}.html", config.get_hash()))?;
 
     let update_contents = move |path: &PathBuf| -> Result<String> {
-        let results = api::get_flights(config).unwrap_or_default();
+        let results = api::search(config).unwrap_or_default();
 
         // Create directory
         let mut dir_path = path.clone();

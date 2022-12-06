@@ -16,7 +16,7 @@ fn test_api_get_flights() {
         0,
     )
     .unwrap();
-    api::get_flights(config).unwrap();
+    api::search(config).unwrap();
 }
 
 /// Test [`api::get_locations`].

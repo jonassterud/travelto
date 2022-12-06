@@ -1,51 +1,10 @@
-use serde::Serialize;
-
-/// Location.
-#[derive(Debug, Serialize)]
-pub struct Location {
-    /// Location id.
-    pub id: String,
-    /// Location code.
-    pub code: String,
-    /// Location name.
-    pub name: String,
-    /// Location country.
-    pub country: Option<Country>,
-    /// Location city.
-    pub city: Option<City>,
-    /// Location type.
-    pub variant: String,
-}
-
-/// Country.
-#[derive(Debug, Serialize)]
-pub struct Country {
-    /// Country id.
-    pub id: String,
-    /// Country name.
-    pub name: String,
-    /// Country code.
-    pub code: String,
-}
-
-/// City.
-#[derive(Debug, Serialize)]
-pub struct City {
-    /// City id.
-    pub id: String,
-    /// City name.
-    pub name: String,
-    /// City code.
-    pub code: String,
-}
-
-impl From<crate::kiwi_api::LocationsResponse> for Vec<Location> {
+impl From<crate::kiwi_api::LocationsResponse> for Vec<super::Location> {
     fn from(val: crate::kiwi_api::LocationsResponse) -> Self {
         val.locations.iter().map(|x| x.into()).collect()
     }
 }
 
-impl From<&crate::kiwi_api::Location> for Location {
+impl From<&crate::kiwi_api::Location> for super::Location {
     fn from(val: &crate::kiwi_api::Location) -> Self {
         Self {
             id: val.id.to_owned(),
@@ -61,7 +20,7 @@ impl From<&crate::kiwi_api::Location> for Location {
     }
 }
 
-impl From<&crate::kiwi_api::LocationCountry> for Country {
+impl From<&crate::kiwi_api::LocationCountry> for super::Country {
     fn from(val: &crate::kiwi_api::LocationCountry) -> Self {
         Self {
             id: val.id.to_owned(),
@@ -71,7 +30,7 @@ impl From<&crate::kiwi_api::LocationCountry> for Country {
     }
 }
 
-impl From<&crate::kiwi_api::LocationCity> for City {
+impl From<&crate::kiwi_api::LocationCity> for super::City {
     fn from(val: &crate::kiwi_api::LocationCity) -> Self {
         Self {
             id: val.id.to_owned(),
