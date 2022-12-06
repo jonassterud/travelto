@@ -1,7 +1,7 @@
 //! API responses.
 
-mod flight;
 mod location;
+mod search;
 
-pub use flight::*;
 pub use location::*;
+pub use search::*;

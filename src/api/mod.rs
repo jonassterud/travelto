@@ -13,14 +13,16 @@ pub use response::*;
 pub use state::*;
 
 /// Combines flight results from different APIs into a single vector.
-pub fn search(config: SearchConfig) -> Result<Vec<Flight>> {
-    let mut out = vec![];
-    out.append(&mut kiwi_api::search(config.clone().into()).map_or(Ok(vec![]), |x| x.try_into())?);
-    out.append(&mut skyscanner_api::search(config.into()).map_or(Ok(vec![]), |x| x.try_into())?);
+pub fn search(config: SearchConfig) -> Result<SearchResponse> {
+    let mut flights = vec![];
+    flights
+        .append(&mut kiwi_api::search(config.clone().into()).map_or(Ok(vec![]), |x| x.try_into())?);
+    flights
+        .append(&mut skyscanner_api::search(config.into()).map_or(Ok(vec![]), |x| x.try_into())?);
 
-    out.sort_by(|a, b| a.price.cmp(&b.price));
+    flights.sort_by(|a, b| a.price.cmp(&b.price));
 
-    Ok(out)
+    Ok(SearchResponse::new(flights, false))
 }
 
 /// Search trough locations by using the Kiwi.com locations API.
