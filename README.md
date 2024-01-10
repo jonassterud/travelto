@@ -3,6 +3,17 @@
 ## About
 **Travelto** tries to find the cheapest way to travel between two destinations.
 
+## Screenshot(s)
+
+<div style="display: flex; text-align: center;">
+    <picture>
+    <img width='90%' src='media/screenshots/1.png'>
+    </picture>
+    <picture>
+    <img width='90%' src='media/screenshots/2.png'>
+    </picture>
+</div>
+
 ## Configuration
 API keys are configured trough environment variables.  
 You can either set them up manually, or you can create a `.env` file in the root directory.
