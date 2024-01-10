@@ -5,12 +5,12 @@
 
 ## Screenshot(s)
 
-<div style="display: flex; text-align: center;">
+<div style="display: flex;">
     <picture>
-    <img width='90%' src='media/screenshots/1.png'>
+    <img width='45%' src='media/screenshots/1.png'>
     </picture>
     <picture>
-    <img width='90%' src='media/screenshots/2.png'>
+    <img width='45%' src='media/screenshots/2.png'>
     </picture>
 </div>
 
